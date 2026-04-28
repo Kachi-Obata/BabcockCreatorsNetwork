@@ -42,7 +42,7 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[180px] lg:h-[220px]">
           {/* Logo */}
           <button
             onClick={() => handleNavClick("#top")}
@@ -52,9 +52,9 @@ export default function Navbar() {
             <Image
               src="/bcn_logo.png"
               alt="BCN Logo"
-              width={40}
-              height={40}
-              className="object-contain"
+              width={240}
+              height={240}
+              className="object-contain h-[160px] lg:h-[200px] w-auto"
               priority
             />
           </button>

@@ -180,16 +180,6 @@ export default function HeroVideo() {
         )}
       </button>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2">
-        <p
-          className="text-white/50 text-[11px] font-medium tracking-[2px] uppercase"
-          style={{ fontFamily: "var(--font-dm-sans)" }}
-        >
-          Scroll to Discover
-        </p>
-        <div className="scroll-line w-px h-10 bg-gradient-to-b from-white/60 to-transparent" />
-      </div>
     </section>
   );
 }
