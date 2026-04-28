@@ -10,6 +10,7 @@ export default function HeroVideo() {
   const [muted, setMuted] = useState(true);
   const [videoEnded, setVideoEnded] = useState(false);
   const [endFading, setEndFading] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(true);
 
   const toggleMute = () => {
     if (!videoRef.current) return;
@@ -26,9 +27,16 @@ export default function HeroVideo() {
     document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Attempt autoplay on mount
+  // Start the video only after the loading screen signals it's done,
+  // then hide the overlay text after 7 seconds
   useEffect(() => {
-    videoRef.current?.play().catch(() => {});
+    const startVideo = () => {
+      videoRef.current?.play().catch(() => {});
+      const textTimer = setTimeout(() => setOverlayVisible(false), 7000);
+      return () => clearTimeout(textTimer);
+    };
+    window.addEventListener("bcn:loadingdone", startVideo, { once: true });
+    return () => window.removeEventListener("bcn:loadingdone", startVideo);
   }, []);
 
   return (
@@ -38,11 +46,9 @@ export default function HeroVideo() {
         ref={videoRef}
         src="/bcn_hero_video.mp4"
         className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
         muted
         playsInline
         preload="auto"
-        onCanPlay={() => window.dispatchEvent(new Event("bcn:videoready"))}
         onEnded={handleEnded}
       />
 
@@ -86,10 +92,10 @@ export default function HeroVideo() {
         )}
       </AnimatePresence>
 
-      {/* Hero overlay content */}
+      {/* Hero overlay content — visible for 7s after video starts, then fades */}
       <div
-        className={`absolute inset-0 z-20 flex items-center transition-opacity duration-700 ${
-          videoEnded ? "opacity-0 pointer-events-none" : "opacity-100"
+        className={`absolute inset-0 z-20 flex items-center transition-opacity duration-[1200ms] ease-in-out ${
+          !overlayVisible || videoEnded ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
