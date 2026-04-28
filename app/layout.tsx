@@ -39,6 +39,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+      <head>
+        {/* Start fetching the hero video as soon as the HTML is parsed —
+            before any JS executes — so it's ready when the component mounts */}
+        <link
+          rel="preload"
+          as="video"
+          href="/bcn_hero_video.mp4"
+          type="video/mp4"
+        />
+      </head>
       <body className="min-h-full">{children}</body>
     </html>
   );

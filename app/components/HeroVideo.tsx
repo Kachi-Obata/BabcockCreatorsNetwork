@@ -42,6 +42,7 @@ export default function HeroVideo() {
         muted
         playsInline
         preload="auto"
+        onCanPlay={() => window.dispatchEvent(new Event("bcn:videoready"))}
         onEnded={handleEnded}
       />
 
