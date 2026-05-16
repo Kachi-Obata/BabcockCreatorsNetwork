@@ -18,91 +18,108 @@ export default function AboutSection() {
     >
       {/* Label — pinned top-left of the section */}
       <p
-        className="absolute top-10 left-6 lg:left-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold"
+        className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"
         style={{ fontFamily: "var(--font-dm-sans)" }}
       >
         What We Are
       </p>
 
-      {/* Body copy */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={viewportOptions}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="px-6 lg:px-10 mt-10 mb-20 max-w-[460px]"
-      >
-        <p
-          className="text-[#555555] text-[16px] leading-[1.8]"
-          style={{ fontFamily: "var(--font-dm-sans)" }}
-        >
-          BCN is a structured talent development platform for student
-          creatives at Babcock University — not just a network, but a system
-          that discovers, develops, connects, and empowers.
-        </p>
-      </motion.div>
-
-      {/* Giant ghost type — bleeds off screen edges */}
-      <div className="overflow-hidden">
-        <motion.p
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
+      {/* Giant ghost type + body copy — instrument.com style */}
+      <div className="relative px-6 lg:px-10">
+        {/* Body copy — positioned in the top-left negative space */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOptions}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="pr-6 lg:pr-10 text-center md:text-right"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(96px, 17vw, 240px)",
-            fontWeight: 900,
-            color: "#C4BFB7",
-            lineHeight: 0.9,
-            letterSpacing: "-4px",
-            whiteSpace: "nowrap",
-          }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-[380px] lg:max-w-[340px] mb-10 lg:mb-0 lg:absolute lg:top-0 lg:left-10 lg:z-10"
         >
-          A System,
-        </motion.p>
+          <p
+            className="text-[#555555] text-[15px] lg:text-[16px] leading-[1.8]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            BCN is a structured talent development platform for student
+            creatives at Babcock University — not just a network, but a system
+            that discovers, develops, connects, and empowers.
+          </p>
+        </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={viewportOptions}
-          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="pl-6 lg:pl-10 text-center md:text-left"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(96px, 17vw, 240px)",
-            fontWeight: 900,
-            color: "#C4BFB7",
-            lineHeight: 0.9,
-            letterSpacing: "-4px",
-            marginTop: "0.12em",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Not Just
-        </motion.p>
+        {/* Giant type block — staggered indentation like instrument.com */}
+        <div className="relative">
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 400,
+              color: "#D0CBC3",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              paddingLeft: "clamp(30%, 35vw, 40%)",
+            }}
+          >
+            A System,
+          </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 300,
+              color: "#D0CBC3",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              marginTop: "-0.05em",
+            }}
+          >
+            Not Just
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#D0CBC3",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              paddingLeft: "clamp(15%, 20vw, 28%)",
+              marginTop: "-0.05em",
+            }}
+          >
+            a Community.
+          </motion.p>
+        </div>
+
+        {/* Second body copy — positioned at bottom-left below the type */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOptions}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="pr-6 lg:pr-10 text-center md:text-right"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(96px, 17vw, 240px)",
-            fontWeight: 900,
-            color: "#C4BFB7",
-            lineHeight: 0.9,
-            letterSpacing: "-4px",
-            fontStyle: "italic",
-            marginTop: "0.12em",
-            whiteSpace: "nowrap",
-          }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-[380px] lg:max-w-[340px] mt-12 lg:mt-16"
         >
-          a Community.
-        </motion.p>
+          <p
+            className="text-[#555555] text-[15px] lg:text-[16px] leading-[1.8]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            From workshops and mentorship to paid opportunities
+            and industry connections — BCN creates the pathway
+            from raw talent to real income.
+          </p>
+        </motion.div>
       </div>
 
       {/* Pipeline strip */}

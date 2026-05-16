@@ -26,4 +26,4 @@ export const fadeIn: Variants = {
   },
 };
 
-export const viewportOptions = { once: true, amount: 0.2 };
+export const viewportOptions = { once: true, amount: 0 };

@@ -42,72 +42,108 @@ export default function BenefitsSection() {
       id="benefits"
       className="relative bg-white overflow-hidden pt-24 pb-28"
     >
-      {/* Label — pinned top-left */}
+      {/* Label */}
       <p
-        className="absolute top-10 left-6 lg:left-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold"
+        className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"
         style={{ fontFamily: "var(--font-dm-sans)" }}
       >
         Why Join
       </p>
 
-      {/* Body copy */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={viewportOptions}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="px-6 lg:px-10 mt-10 mb-20 max-w-[460px]"
-      >
-        <p
-          className="text-[#555555] text-[16px] leading-[1.8]"
-          style={{ fontFamily: "var(--font-dm-sans)" }}
-        >
-          BCN isn&apos;t just a title on your bio. It&apos;s an operating
-          system for your creative career — from raw skill to real income.
-        </p>
-      </motion.div>
-
-      {/* Giant ghost type */}
-      <div className="overflow-hidden">
-        <motion.p
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
+      {/* Giant ghost type + body copy — instrument.com style */}
+      <div className="relative px-6 lg:px-10">
+        {/* Body copy — top-left */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOptions}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="pl-6 lg:pl-10 text-center md:text-left"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(96px, 17vw, 240px)",
-            fontWeight: 900,
-            color: "#D8D3CD",
-            lineHeight: 0.9,
-            letterSpacing: "-4px",
-            whiteSpace: "nowrap",
-          }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-[380px] lg:max-w-[340px] mb-10 lg:mb-0 lg:absolute lg:top-0 lg:left-10 lg:z-10"
         >
-          Turn Talent
-        </motion.p>
+          <p
+            className="text-[#555555] text-[15px] lg:text-[16px] leading-[1.8]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            BCN isn&apos;t just a title on your bio. It&apos;s an operating
+            system for your creative career — from raw skill to real income.
+          </p>
+        </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
+        {/* Giant type block */}
+        <div className="relative">
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 300,
+              color: "#D8D3CD",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              paddingLeft: "clamp(20%, 28vw, 35%)",
+            }}
+          >
+            Turn
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 400,
+              color: "#D8D3CD",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              marginTop: "-0.05em",
+            }}
+          >
+            Talent Into
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(72px, 15vw, 200px)",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#D8D3CD",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              paddingLeft: "clamp(15%, 22vw, 30%)",
+              marginTop: "-0.05em",
+            }}
+          >
+            Income.
+          </motion.p>
+        </div>
+
+        {/* Body copy — bottom-left */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOptions}
-          transition={{ duration: 1, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-          className="pr-6 lg:pr-10 text-center md:text-right"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(96px, 17vw, 240px)",
-            fontWeight: 900,
-            color: "#D8D3CD",
-            lineHeight: 0.9,
-            letterSpacing: "-4px",
-            fontStyle: "italic",
-            marginTop: "0.12em",
-            whiteSpace: "nowrap",
-          }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-[380px] lg:max-w-[340px] mt-12 lg:mt-16"
         >
-          Into Income.
-        </motion.p>
+          <p
+            className="text-[#555555] text-[15px] lg:text-[16px] leading-[1.8]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            Access real projects, mentorship, and paid opportunities
+            that transform your creative skills into a sustainable career.
+          </p>
+        </motion.div>
       </div>
 
       {/* Benefits — manifesto list */}
