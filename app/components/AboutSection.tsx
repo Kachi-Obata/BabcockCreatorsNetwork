@@ -91,13 +91,13 @@ export default function AboutSection() {
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{
               fontFamily: "var(--font-playfair)",
-              fontSize: "18vw",
+              fontSize: "16vw",
               fontWeight: 400,
               fontStyle: "italic",
               color: "#D0CBC3",
               lineHeight: 1,
               letterSpacing: "-0.03em",
-              paddingLeft: "12%",
+              paddingLeft: "8%",
               marginTop: "-0.02em",
             }}
           >
