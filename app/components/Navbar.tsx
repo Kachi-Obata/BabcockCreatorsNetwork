@@ -42,7 +42,7 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[180px] lg:h-[220px]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <button
             onClick={() => handleNavClick("#top")}
@@ -54,7 +54,7 @@ export default function Navbar() {
               alt="BCN Logo"
               width={240}
               height={240}
-              className="object-contain h-[160px] lg:h-[200px] w-auto"
+              className="object-contain h-14 lg:h-16 w-auto"
               priority
             />
           </button>
