@@ -83,7 +83,7 @@ export default function BenefitsSection() {
               color: "#D8D3CD",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
-              paddingLeft: "clamp(20%, 28vw, 35%)",
+              paddingLeft: "clamp(35%, 42vw, 50%)",
             }}
           >
             Turn
@@ -101,6 +101,7 @@ export default function BenefitsSection() {
               color: "#D8D3CD",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
+              paddingLeft: "clamp(8%, 12vw, 16%)",
               marginTop: "-0.05em",
             }}
           >
@@ -120,7 +121,7 @@ export default function BenefitsSection() {
               color: "#D8D3CD",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
-              paddingLeft: "clamp(15%, 22vw, 30%)",
+              paddingLeft: "clamp(20%, 28vw, 34%)",
               marginTop: "-0.05em",
             }}
           >

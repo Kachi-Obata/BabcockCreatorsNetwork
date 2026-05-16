@@ -62,7 +62,7 @@ export default function DisciplinesGrid() {
               color: "rgba(255,255,255,0.1)",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
-              paddingLeft: "clamp(25%, 30vw, 38%)",
+              paddingLeft: "clamp(30%, 38vw, 45%)",
             }}
           >
             Every
@@ -80,6 +80,7 @@ export default function DisciplinesGrid() {
               color: "rgba(255,255,255,0.1)",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
+              paddingLeft: "clamp(10%, 15vw, 20%)",
               marginTop: "-0.05em",
             }}
           >
@@ -99,7 +100,7 @@ export default function DisciplinesGrid() {
               color: "rgba(255,255,255,0.1)",
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
-              paddingLeft: "clamp(20%, 25vw, 32%)",
+              paddingLeft: "clamp(22%, 30vw, 38%)",
               marginTop: "-0.05em",
             }}
           >
