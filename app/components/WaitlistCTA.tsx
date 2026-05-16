@@ -3,7 +3,26 @@
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer, viewportOptions } from "../lib/animations";
 
-const WAITLIST_URL = "https://bit.ly/BCNWaitlist";
+// Replace with your Google Form URL once created
+const REGISTRATION_FORM_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
+
+const steps = [
+  {
+    number: "01",
+    title: "Fill the Form",
+    description: "Submit your details and creative profile via our registration form.",
+  },
+  {
+    number: "02",
+    title: "Pay ₦5,000",
+    description: "Transfer your membership fee to the account details provided in the form.",
+  },
+  {
+    number: "03",
+    title: "Upload Receipt",
+    description: "Attach your payment receipt in the form. We'll confirm your spot within 24 hours.",
+  },
+];
 
 export default function WaitlistCTA() {
   return (
@@ -21,19 +40,20 @@ export default function WaitlistCTA() {
         }}
       />
 
-      <div className="max-w-3xl mx-auto text-center relative z-10">
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
+          className="text-center"
         >
           <motion.p
             variants={fadeUp}
             className="mb-4 text-[#AE8C07] uppercase tracking-[4px] text-[12px] font-bold"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Join the Network
+            Membership 2025 / 2026
           </motion.p>
 
           <motion.h2
@@ -52,30 +72,73 @@ export default function WaitlistCTA() {
 
           <motion.p
             variants={fadeUp}
-            className="mb-10 text-white/60 text-[17px] leading-relaxed max-w-xl mx-auto"
+            className="mb-16 text-white/60 text-[17px] leading-relaxed max-w-xl mx-auto"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            BCN is where creativity meets opportunity. From talent to income —
-            we create the pathway. Register. Connect. Create. Grow.
+            BCN membership gives you access to a full creative ecosystem — collaborations,
+            mentorship, resources, and real opportunities. Register below to secure your spot.
           </motion.p>
+        </motion.div>
 
-          <motion.div variants={fadeUp} className="flex flex-col items-center gap-4">
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-[18px] rounded-full bg-[#AE8C07] text-[#1A1A1A] font-bold text-[16px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#AE8C07]/40"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
+        {/* Steps */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOptions}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14"
+        >
+          {steps.map((step) => (
+            <motion.div
+              key={step.number}
+              variants={fadeUp}
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8"
             >
-              Join the Waitlist
-            </a>
-            <p
-              className="text-white/35 text-[13px]"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
-            >
-              Be among the first to join Babcock&apos;s premier creative network.
-            </p>
-          </motion.div>
+              <p
+                className="text-[#AE8C07] text-[13px] font-bold mb-3 tracking-[2px]"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                {step.number}
+              </p>
+              <p
+                className="text-white font-bold text-[17px] mb-2"
+                style={{ fontFamily: "var(--font-playfair)" }}
+              >
+                {step.title}
+              </p>
+              <p
+                className="text-white/50 text-[14px] leading-relaxed"
+                style={{ fontFamily: "var(--font-dm-sans)" }}
+              >
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOptions}
+          className="flex flex-col items-center gap-4"
+        >
+          <a
+            href={REGISTRATION_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-10 py-[18px] rounded-full bg-[#AE8C07] text-[#1A1A1A] font-bold text-[16px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#AE8C07]/40"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            Apply Now — ₦5,000
+          </a>
+          <p
+            className="text-white/35 text-[13px]"
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            Membership is open to all Babcock University students.
+          </p>
         </motion.div>
       </div>
     </section>

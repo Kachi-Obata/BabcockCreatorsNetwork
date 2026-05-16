@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const WAITLIST_URL = "https://bit.ly/BCNWaitlist";
+const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
 const TikTokIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -52,11 +52,11 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-4">
               <Image
-                src="/bcn_logo.png"
+                src="/bcn_logo1.png"
                 alt="BCN Logo"
-                width={48}
-                height={48}
-                className="object-contain invert brightness-200"
+                width={418}
+                height={163}
+                className="object-contain h-[60px] w-auto invert brightness-200"
               />
             </div>
             <p
@@ -113,7 +113,7 @@ export default function Footer() {
                   className="text-[#888888] text-[14px] hover:text-white transition-colors duration-200"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
-                  Join the Waitlist
+                  Apply Now
                 </a>
               </li>
             </ul>

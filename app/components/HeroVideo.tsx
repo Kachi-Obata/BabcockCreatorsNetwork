@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const WAITLIST_URL = "https://bit.ly/BCNWaitlist";
+const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -27,16 +27,11 @@ export default function HeroVideo() {
     document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Start the video only after the loading screen signals it's done,
-  // then hide the overlay text after 7 seconds
+  // Autoplay on mount, hide overlay text after 7 seconds
   useEffect(() => {
-    const startVideo = () => {
-      videoRef.current?.play().catch(() => {});
-      const textTimer = setTimeout(() => setOverlayVisible(false), 7000);
-      return () => clearTimeout(textTimer);
-    };
-    window.addEventListener("bcn:loadingdone", startVideo, { once: true });
-    return () => window.removeEventListener("bcn:loadingdone", startVideo);
+    videoRef.current?.play().catch(() => {});
+    const textTimer = setTimeout(() => setOverlayVisible(false), 7000);
+    return () => clearTimeout(textTimer);
   }, []);
 
   return (
@@ -46,6 +41,7 @@ export default function HeroVideo() {
         ref={videoRef}
         src="/bcn_hero_video.mp4"
         className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
         muted
         playsInline
         preload="auto"
@@ -159,7 +155,7 @@ export default function HeroVideo() {
                 className="px-8 py-4 rounded-full border border-white/80 text-white font-semibold text-[14px] transition-all duration-200 hover:bg-white/10"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                Join the Waitlist
+                Apply Now
               </a>
             </div>
           </motion.div>

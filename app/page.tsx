@@ -1,4 +1,3 @@
-import LoadingScreen from "./components/LoadingScreen";
 import Navbar from "./components/Navbar";
 import HeroVideo from "./components/HeroVideo";
 import AboutSection from "./components/AboutSection";
@@ -11,7 +10,6 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <>
-      <LoadingScreen />
       <Navbar />
       <main>
         <HeroVideo />

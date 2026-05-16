@@ -8,10 +8,10 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Benefits", href: "#benefits" },
   { label: "Creatives", href: "#creatives" },
-  { label: "Join Waitlist", href: "#join" },
+  { label: "Apply", href: "#join" },
 ];
 
-const WAITLIST_URL = "https://bit.ly/BCNWaitlist";
+const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -42,7 +42,7 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 lg:h-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[64px] lg:h-[72px]">
           {/* Logo */}
           <button
             onClick={() => handleNavClick("#top")}
@@ -50,11 +50,11 @@ export default function Navbar() {
             aria-label="Scroll to top"
           >
             <Image
-              src="/bcn_logo.png"
+              src="/bcn_logo1.png"
               alt="BCN Logo"
-              width={240}
-              height={240}
-              className="object-contain h-14 lg:h-16 w-auto"
+              width={418}
+              height={163}
+              className="object-contain h-[40px] lg:h-[50px] w-auto"
               priority
             />
           </button>
@@ -80,7 +80,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="ml-2 px-5 py-2.5 rounded-full bg-[#003895] text-white font-[family-name:var(--font-dm-sans)] text-[14px] font-semibold transition-all duration-200 hover:-translate-y-px hover:shadow-lg hover:shadow-[#003895]/30"
             >
-              Join the Waitlist
+              Apply Now
             </a>
           </nav>
 
@@ -137,7 +137,7 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="mt-4 px-8 py-3 rounded-full bg-[#003895] text-white font-[family-name:var(--font-dm-sans)] text-[15px] font-semibold"
               >
-                Join the Waitlist
+                Apply Now
               </motion.a>
             </nav>
           </motion.div>
