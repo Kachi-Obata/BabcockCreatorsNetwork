@@ -44,8 +44,69 @@ export default function AboutSection() {
           </p>
         </motion.div>
 
-        {/* Giant type block — staggered indentation like instrument.com */}
-        <div className="relative">
+        {/* Giant type block — mobile: 3 clean lines, desktop: staggered */}
+
+        {/* ===== MOBILE VERSION (< md) ===== */}
+        <div className="relative md:hidden">
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "18vw",
+              fontWeight: 400,
+              color: "#D0CBC3",
+              lineHeight: 1,
+              letterSpacing: "-0.03em",
+              paddingLeft: "8%",
+            }}
+          >
+            A System,
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-dm-sans)",
+              fontSize: "18vw",
+              fontWeight: 300,
+              color: "#D0CBC3",
+              lineHeight: 1,
+              letterSpacing: "-0.03em",
+              marginTop: "-0.02em",
+            }}
+          >
+            Not Just a
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "18vw",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#D0CBC3",
+              lineHeight: 1,
+              letterSpacing: "-0.03em",
+              paddingLeft: "12%",
+              marginTop: "-0.02em",
+            }}
+          >
+            Community.
+          </motion.p>
+        </div>
+
+        {/* ===== DESKTOP VERSION (>= md) ===== */}
+        <div className="relative hidden md:block">
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
