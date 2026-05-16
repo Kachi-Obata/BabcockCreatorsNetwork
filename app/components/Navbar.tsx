@@ -110,7 +110,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] bg-[#1A1A1A]/96 backdrop-blur-sm flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[20000] bg-[#1A1A1A]/96 backdrop-blur-sm flex flex-col items-center justify-center"
           >
             <button
               onClick={() => setMenuOpen(false)}
