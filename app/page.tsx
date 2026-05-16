@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="isolate">
         <HeroVideo />
         <AboutSection />
         <DisciplinesGrid />

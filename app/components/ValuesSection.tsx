@@ -68,8 +68,50 @@ export default function ValuesSection() {
           </p>
         </motion.div>
 
-        {/* Giant type block */}
-        <div className="relative">
+        {/* Giant type block — mobile left-aligned, desktop staggered */}
+
+        {/* ===== MOBILE (< md) ===== */}
+        <div className="relative md:hidden">
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "18vw",
+              fontWeight: 400,
+              color: "#C4BFB7",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+            }}
+          >
+            What We
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOptions}
+            transition={{ duration: 1, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "18vw",
+              fontWeight: 400,
+              fontStyle: "italic",
+              color: "#C4BFB7",
+              lineHeight: 0.95,
+              letterSpacing: "-0.03em",
+              paddingLeft: "8%",
+              marginTop: "-0.05em",
+            }}
+          >
+            Stand For.
+          </motion.p>
+        </div>
+
+        {/* ===== DESKTOP (>= md) ===== */}
+        <div className="relative hidden md:block">
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -36,12 +36,16 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[10000] transition-all duration-300 ${
           scrolled
             ? "bg-[#F5F0E8]/95 backdrop-blur-[20px] shadow-sm border-b border-[#E8E4DE]"
             : "bg-[#F5F0E8]"
         }`}
-        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+        style={{
+          paddingTop: "env(safe-area-inset-top, 0px)",
+          transform: "translateZ(0)",
+          WebkitTransform: "translateZ(0)",
+        }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[64px] lg:h-[72px]">
           {/* Logo */}
