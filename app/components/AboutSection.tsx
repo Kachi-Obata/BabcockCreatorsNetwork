@@ -19,7 +19,7 @@ export default function AboutSection() {
     >
       {/* Camera icon — peeks in from the right edge */}
       <div
-        className="absolute pointer-events-none select-none hidden md:block"
+        className="absolute pointer-events-none select-none"
         style={{ right: "-58px", top: "180px", transform: "rotate(14deg)", zIndex: 0 }}
       >
         <CameraIcon />
@@ -27,7 +27,7 @@ export default function AboutSection() {
 
       {/* Headphones icon — peeks in from the left edge */}
       <div
-        className="absolute pointer-events-none select-none hidden md:block"
+        className="absolute pointer-events-none select-none"
         style={{ left: "-48px", bottom: "160px", transform: "rotate(-11deg)", zIndex: 0 }}
       >
         <HeadphonesIcon />

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
-import { FountainPenIcon } from "./CreativeIcons";
+import { FountainPenIcon, MicrophoneIcon } from "./CreativeIcons";
 
 const disciplines = [
   { name: "Photography", desc: "Portraits, editorials, street & documentary" },
@@ -21,9 +21,17 @@ export default function DisciplinesGrid() {
       id="creatives"
       className="relative bg-[#1A1A1A] overflow-hidden pt-24 pb-28"
     >
+      {/* Microphone icon — peeks in from the left edge */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ left: "-24px", top: "190px", transform: "rotate(10deg)", zIndex: 0 }}
+      >
+        <MicrophoneIcon />
+      </div>
+
       {/* Fountain pen icon — peeks in from the right edge */}
       <div
-        className="absolute pointer-events-none select-none hidden md:block"
+        className="absolute pointer-events-none select-none"
         style={{ right: "-18px", top: "145px", transform: "rotate(-16deg)", zIndex: 0 }}
       >
         <FountainPenIcon />

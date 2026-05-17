@@ -45,7 +45,7 @@ export default function BenefitsSection() {
     >
       {/* Clapperboard icon — peeks in from the left edge */}
       <div
-        className="absolute pointer-events-none select-none hidden md:block"
+        className="absolute pointer-events-none select-none"
         style={{ left: "-52px", top: "190px", transform: "rotate(-9deg)", zIndex: 0 }}
       >
         <ClapperboardIcon />
@@ -53,7 +53,7 @@ export default function BenefitsSection() {
 
       {/* Palette icon — peeks in from the right edge */}
       <div
-        className="absolute pointer-events-none select-none hidden md:block"
+        className="absolute pointer-events-none select-none"
         style={{ right: "-52px", bottom: "155px", transform: "rotate(11deg)", zIndex: 0 }}
       >
         <PaletteIcon />

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
+import { VinylRecordIcon, PencilIcon } from "./CreativeIcons";
 
 const values = [
   {
@@ -41,6 +42,22 @@ export default function ValuesSection() {
     <section
       className="relative bg-[#F5F0E8] overflow-hidden pt-24 pb-28"
     >
+      {/* Vinyl record — peeks in from the left edge */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ left: "-62px", top: "175px", transform: "rotate(-8deg)", zIndex: 0 }}
+      >
+        <VinylRecordIcon />
+      </div>
+
+      {/* Pencil — peeks in from the right edge */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ right: "-20px", bottom: "170px", transform: "rotate(13deg)", zIndex: 0 }}
+      >
+        <PencilIcon />
+      </div>
+
       {/* Label */}
       <p
         className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"

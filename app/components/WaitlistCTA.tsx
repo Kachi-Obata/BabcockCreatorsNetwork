@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer, viewportOptions } from "../lib/animations";
+import { SpeakerIcon, SprayCanIcon } from "./CreativeIcons";
 
 // Replace with your Google Form URL once created
 const REGISTRATION_FORM_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
@@ -31,6 +32,22 @@ export default function WaitlistCTA() {
       className="relative py-[120px] px-6 lg:px-10 overflow-hidden"
       style={{ background: "#003895" }}
     >
+      {/* Studio speaker — peeks in from the left edge */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ left: "-50px", top: "140px", transform: "rotate(8deg)", zIndex: 0 }}
+      >
+        <SpeakerIcon />
+      </div>
+
+      {/* Spray can — peeks in from the right edge */}
+      <div
+        className="absolute pointer-events-none select-none"
+        style={{ right: "-24px", bottom: "130px", transform: "rotate(-12deg)", zIndex: 0 }}
+      >
+        <SprayCanIcon />
+      </div>
+
       {/* Gold radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -53,7 +70,7 @@ export default function WaitlistCTA() {
             className="mb-4 text-[#AE8C07] uppercase tracking-[4px] text-[12px] font-bold"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Membership 2025 / 2026
+            Membership 2026 / 2027
           </motion.p>
 
           <motion.h2
