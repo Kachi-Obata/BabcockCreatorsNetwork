@@ -171,30 +171,60 @@ export default function Footer() {
 
       {/* Closing statement */}
       <div className="mt-16 overflow-hidden">
-        {/* Chef hat icon */}
-        <div className="flex justify-center mb-6">
+        {/* Cooking pot illustration */}
+        <div className="flex justify-center mb-8">
           <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
+            width="110"
+            height="120"
+            viewBox="0 0 110 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
-            {/* Hat brim */}
-            <rect x="14" y="42" width="36" height="6" rx="2" fill="white" opacity="0.25"/>
-            {/* Brim detail line */}
-            <rect x="14" y="46" width="36" height="2" rx="1" fill="white" opacity="0.15"/>
-            {/* Left puff */}
-            <circle cx="20" cy="30" r="11" fill="white" opacity="0.2"/>
-            {/* Right puff */}
-            <circle cx="44" cy="30" r="11" fill="white" opacity="0.2"/>
-            {/* Centre tall puff */}
-            <ellipse cx="32" cy="24" rx="12" ry="14" fill="white" opacity="0.3"/>
-            {/* Overlap fill to merge the three puffs */}
-            <rect x="14" y="34" width="36" height="10" fill="white" opacity="0.25"/>
-            {/* Highlight on centre puff */}
-            <ellipse cx="29" cy="20" rx="4" ry="5" fill="white" opacity="0.15"/>
+            {/* Steam wisps — three wavy S-curves */}
+            <path d="M28 55 C23 46 32 40 27 31 C22 22 31 16 26 7"
+              stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5"/>
+            <path d="M55 52 C50 43 59 37 54 28 C49 19 58 13 53 4"
+              stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.65"/>
+            <path d="M82 55 C77 46 86 40 81 31 C76 22 85 16 80 7"
+              stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5"/>
+
+            {/* Lid knob */}
+            <rect x="46" y="58" width="18" height="11" rx="5.5" fill="white" opacity="0.9"/>
+
+            {/* Lid — convex top surface */}
+            <path d="M8 74 Q55 63 102 74" fill="white" fillOpacity="0.18"/>
+            <path d="M8 74 Q55 63 102 74"
+              stroke="white" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.85"/>
+
+            {/* Lid rim strip */}
+            <path d="M8 74 Q55 80 102 74"
+              stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.3"/>
+
+            {/* Pot body */}
+            <path d="M10 78 L10 94 Q10 117 55 117 Q100 117 100 94 L100 78 Z"
+              fill="white" fillOpacity="0.13"/>
+            <path d="M10 78 L10 94 Q10 117 55 117 Q100 117 100 94 L100 78"
+              stroke="white" strokeWidth="2.5" fill="none" opacity="0.6"/>
+
+            {/* Pot belly highlight */}
+            <ellipse cx="34" cy="97" rx="12" ry="7" fill="white" fillOpacity="0.07"/>
+
+            {/* Left handle */}
+            <path d="M10 84 Q2 80 2 89 Q2 98 10 94"
+              stroke="white" strokeWidth="3.5" fill="none" opacity="0.65"
+              strokeLinecap="round" strokeLinejoin="round"/>
+
+            {/* Right handle */}
+            <path d="M100 84 Q108 80 108 89 Q108 98 100 94"
+              stroke="white" strokeWidth="3.5" fill="none" opacity="0.65"
+              strokeLinecap="round" strokeLinejoin="round"/>
+
+            {/* Ladle dipping in from top-right */}
+            <line x1="96" y1="56" x2="78" y2="74"
+              stroke="white" strokeWidth="2.5" strokeLinecap="round" opacity="0.55"/>
+            <ellipse cx="74" cy="77" rx="7" ry="4.5"
+              transform="rotate(-40 74 77)" fill="white" opacity="0.45"/>
           </svg>
         </div>
 
