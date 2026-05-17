@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
+import { ClapperboardIcon, PaletteIcon } from "./CreativeIcons";
 
 const benefits = [
   {
@@ -42,6 +43,22 @@ export default function BenefitsSection() {
       id="benefits"
       className="relative bg-white overflow-hidden pt-24 pb-28"
     >
+      {/* Clapperboard icon — peeks in from the left edge */}
+      <div
+        className="absolute pointer-events-none select-none hidden md:block"
+        style={{ left: "-52px", top: "190px", transform: "rotate(-9deg)", zIndex: 0 }}
+      >
+        <ClapperboardIcon />
+      </div>
+
+      {/* Palette icon — peeks in from the right edge */}
+      <div
+        className="absolute pointer-events-none select-none hidden md:block"
+        style={{ right: "-52px", bottom: "155px", transform: "rotate(11deg)", zIndex: 0 }}
+      >
+        <PaletteIcon />
+      </div>
+
       {/* Label */}
       <p
         className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"

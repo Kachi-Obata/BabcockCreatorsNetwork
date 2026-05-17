@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
+import { FountainPenIcon } from "./CreativeIcons";
 
 const disciplines = [
   { name: "Photography", desc: "Portraits, editorials, street & documentary" },
@@ -20,6 +21,14 @@ export default function DisciplinesGrid() {
       id="creatives"
       className="relative bg-[#1A1A1A] overflow-hidden pt-24 pb-28"
     >
+      {/* Fountain pen icon — peeks in from the right edge */}
+      <div
+        className="absolute pointer-events-none select-none hidden md:block"
+        style={{ right: "-18px", top: "145px", transform: "rotate(-16deg)", zIndex: 0 }}
+      >
+        <FountainPenIcon />
+      </div>
+
       {/* Label */}
       <p
         className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"

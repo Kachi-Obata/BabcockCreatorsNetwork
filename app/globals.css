@@ -65,3 +65,8 @@ body::after {
     scroll-behavior: auto;
   }
 }
+
+/* Prevent horizontal scroll from edge-peeking decorative icons */
+html {
+  overflow-x: hidden;
+}

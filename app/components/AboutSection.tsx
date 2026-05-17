@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
+import { CameraIcon, HeadphonesIcon } from "./CreativeIcons";
 
 const pipeline = [
   { num: "01", step: "Discover", desc: "Raw talent found across campus" },
@@ -16,6 +17,22 @@ export default function AboutSection() {
       id="about"
       className="relative bg-[#F5F0E8] overflow-hidden pt-24 pb-28"
     >
+      {/* Camera icon — peeks in from the right edge */}
+      <div
+        className="absolute pointer-events-none select-none hidden md:block"
+        style={{ right: "-58px", top: "180px", transform: "rotate(14deg)", zIndex: 0 }}
+      >
+        <CameraIcon />
+      </div>
+
+      {/* Headphones icon — peeks in from the left edge */}
+      <div
+        className="absolute pointer-events-none select-none hidden md:block"
+        style={{ left: "-48px", bottom: "160px", transform: "rotate(-11deg)", zIndex: 0 }}
+      >
+        <HeadphonesIcon />
+      </div>
+
       {/* Label — pinned top-left of the section */}
       <p
         className="px-6 lg:px-10 text-[#AE8C07] uppercase tracking-[4px] text-[11px] font-bold mb-16"
