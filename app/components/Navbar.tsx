@@ -8,7 +8,6 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Benefits", href: "#benefits" },
   { label: "Creatives", href: "#creatives" },
-  { label: "Apply", href: "#join" },
 ];
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";

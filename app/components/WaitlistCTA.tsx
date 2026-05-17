@@ -131,7 +131,7 @@ export default function WaitlistCTA() {
             className="inline-block px-10 py-[18px] rounded-full bg-[#AE8C07] text-[#1A1A1A] font-bold text-[16px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#AE8C07]/40"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Apply Now — ₦5,000
+            Apply Now
           </a>
           <p
             className="text-white/35 text-[13px]"

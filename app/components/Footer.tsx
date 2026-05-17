@@ -169,12 +169,39 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Pentagram-style closing statement */}
+      {/* Closing statement */}
       <div className="mt-16 overflow-hidden">
+        {/* Chef hat icon */}
+        <div className="flex justify-center mb-6">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            {/* Hat brim */}
+            <rect x="14" y="42" width="36" height="6" rx="2" fill="white" opacity="0.25"/>
+            {/* Brim detail line */}
+            <rect x="14" y="46" width="36" height="2" rx="1" fill="white" opacity="0.15"/>
+            {/* Left puff */}
+            <circle cx="20" cy="30" r="11" fill="white" opacity="0.2"/>
+            {/* Right puff */}
+            <circle cx="44" cy="30" r="11" fill="white" opacity="0.2"/>
+            {/* Centre tall puff */}
+            <ellipse cx="32" cy="24" rx="12" ry="14" fill="white" opacity="0.3"/>
+            {/* Overlap fill to merge the three puffs */}
+            <rect x="14" y="34" width="36" height="10" fill="white" opacity="0.25"/>
+            {/* Highlight on centre puff */}
+            <ellipse cx="29" cy="20" rx="4" ry="5" fill="white" opacity="0.15"/>
+          </svg>
+        </div>
+
         <p
           style={{
             fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(88px, 19vw, 272px)",
+            fontSize: "clamp(72px, 16vw, 232px)",
             fontWeight: 900,
             color: "white",
             lineHeight: 0.88,
@@ -184,12 +211,12 @@ export default function Footer() {
             whiteSpace: "nowrap",
           }}
         >
-          More
+          Still
         </p>
         <p
           style={{
             fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(88px, 19vw, 272px)",
+            fontSize: "clamp(72px, 16vw, 232px)",
             fontWeight: 900,
             color: "white",
             lineHeight: 0.88,
@@ -199,12 +226,12 @@ export default function Footer() {
             whiteSpace: "nowrap",
           }}
         >
-          Coming
+          Cooking
         </p>
         <p
           style={{
             fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(88px, 19vw, 272px)",
+            fontSize: "clamp(72px, 16vw, 232px)",
             fontWeight: 900,
             color: "white",
             lineHeight: 0.88,
@@ -216,7 +243,7 @@ export default function Footer() {
             whiteSpace: "nowrap",
           }}
         >
-          Soon.
+          ......
         </p>
       </div>
     </footer>
