@@ -168,6 +168,57 @@ export default function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Pentagram-style closing statement */}
+      <div className="mt-16 overflow-hidden">
+        <p
+          style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(88px, 19vw, 272px)",
+            fontWeight: 900,
+            color: "white",
+            lineHeight: 0.88,
+            letterSpacing: "-0.03em",
+            paddingRight: "clamp(16px, 2.5vw, 40px)",
+            textAlign: "right",
+            whiteSpace: "nowrap",
+          }}
+        >
+          More
+        </p>
+        <p
+          style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(88px, 19vw, 272px)",
+            fontWeight: 900,
+            color: "white",
+            lineHeight: 0.88,
+            letterSpacing: "-0.03em",
+            paddingLeft: "clamp(16px, 2.5vw, 40px)",
+            marginTop: "-0.04em",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Coming
+        </p>
+        <p
+          style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(88px, 19vw, 272px)",
+            fontWeight: 900,
+            color: "white",
+            lineHeight: 0.88,
+            letterSpacing: "-0.03em",
+            fontStyle: "italic",
+            paddingRight: "clamp(16px, 2.5vw, 40px)",
+            marginTop: "-0.04em",
+            textAlign: "right",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Soon.
+        </p>
+      </div>
     </footer>
   );
 }
