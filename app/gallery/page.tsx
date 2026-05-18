@@ -364,7 +364,11 @@ function ScrollingColumn({
           <div
             key={`${filename}-${idx}`}
             className="overflow-hidden rounded-[3px] sm:rounded-[5px]"
-            style={{ flexShrink: 0 }}
+            style={{
+              flexShrink: 0,
+              // Dark placeholder so blank space looks intentional while images decode
+              background: "#1e1e1e",
+            }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -377,7 +381,13 @@ function ScrollingColumn({
                 transition: "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                 transform: paused ? "scale(1.03)" : "scale(1)",
               }}
-              loading={idx < 6 ? "eager" : "lazy"}
+              // Never lazy-load inside a CSS-animated container —
+              // the browser calculates visibility from the static DOM
+              // position and ignores transforms, so lazy images never
+              // trigger past the first few. Eager loads all in parallel.
+              loading="eager"
+              // Prioritise the first handful that are visually on-screen
+              fetchPriority={idx < 8 ? "high" : "auto"}
               decoding="async"
             />
           </div>
