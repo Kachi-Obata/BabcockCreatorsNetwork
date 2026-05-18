@@ -13,15 +13,28 @@ const navLinks = [
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
-export default function Navbar() {
+interface NavbarProps {
+  /** Force the "scrolled" colour scheme regardless of scroll position.
+   *  Use on pages that never actually scroll (e.g. the gallery). */
+  forceDark?: boolean;
+  /** Extra link injected before the main nav items (e.g. a back-to-home link). */
+  backLink?: { label: string; href: string };
+}
+
+export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // isDark drives all colour decisions — true when scrolled OR when the
+  // page forces the dark treatment (gallery, etc.)
+  const isDark = scrolled || forceDark;
+
   useEffect(() => {
+    if (forceDark) return; // gallery is overflow-hidden, scrollY never changes
     const onScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [forceDark]);
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
@@ -35,14 +48,19 @@ export default function Navbar() {
       return;
     }
     const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Section doesn't exist on this page — navigate home with the anchor
+      window.location.href = `/${href}`;
+    }
   };
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-[10000] transition-all duration-300 ${
-          scrolled
+          isDark
             ? "bg-[#F5F0E8]/95 backdrop-blur-[20px] shadow-sm border-b border-[#E8E4DE]"
             : "bg-[#F5F0E8]"
         }`}
@@ -71,12 +89,25 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
+            {/* Optional back link (e.g. "Index" on the gallery page) */}
+            {backLink && (
+              <button
+                onClick={() => handleNavClick(backLink.href)}
+                className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 italic ${
+                  isDark
+                    ? "text-[#1A1A1A]/60 hover:text-[#003895]"
+                    : "text-white/50 hover:text-white"
+                }`}
+              >
+                {backLink.label}
+              </button>
+            )}
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
                 className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 ${
-                  scrolled
+                  isDark
                     ? "text-[#1A1A1A] hover:text-[#003895]"
                     : "text-white/80 hover:text-white"
                 }`}
@@ -100,9 +131,9 @@ export default function Navbar() {
             className="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none"
             aria-label="Open menu"
           >
-            <span className={`block w-6 h-0.5 transition-colors duration-200 ${scrolled ? "bg-[#1A1A1A]" : "bg-white"}`} />
-            <span className={`block w-6 h-0.5 transition-colors duration-200 ${scrolled ? "bg-[#1A1A1A]" : "bg-white"}`} />
-            <span className={`block w-4 h-0.5 transition-colors duration-200 ${scrolled ? "bg-[#1A1A1A]" : "bg-white"}`} />
+            <span className={`block w-6 h-0.5 transition-colors duration-200 ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`} />
+            <span className={`block w-6 h-0.5 transition-colors duration-200 ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`} />
+            <span className={`block w-4 h-0.5 transition-colors duration-200 ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`} />
           </button>
         </div>
       </header>
@@ -125,12 +156,24 @@ export default function Navbar() {
               ×
             </button>
             <nav className="flex flex-col items-center gap-8">
+              {/* Back link at top of mobile overlay */}
+              {backLink && (
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0 }}
+                  onClick={() => handleNavClick(backLink.href)}
+                  className="font-[family-name:var(--font-dm-sans)] text-base italic text-white/40 hover:text-white/80 transition-colors duration-200"
+                >
+                  {backLink.label}
+                </motion.button>
+              )}
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }}
+                  transition={{ delay: (backLink ? i + 1 : i) * 0.07 }}
                   onClick={() => handleNavClick(link.href)}
                   className="font-[family-name:var(--font-playfair)] text-3xl text-white hover:text-[#AE8C07] transition-colors duration-200"
                 >

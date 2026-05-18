@@ -206,7 +206,7 @@ const COL_CONFIG = [
 export default function GalleryPage() {
   return (
     <main className="relative h-screen overflow-hidden bg-[#111111]">
-      <Navbar />
+      <Navbar forceDark backLink={{ label: "Index", href: "/" }} />
 
       {/* Scrolling columns — full bleed */}
       <div className="absolute inset-0 flex gap-[5px] sm:gap-[7px]">
