@@ -70,3 +70,14 @@ body::after {
 html {
   overflow-x: hidden;
 }
+
+/* Gallery scrolling column animations */
+@keyframes gallery-scroll-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes gallery-scroll-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}

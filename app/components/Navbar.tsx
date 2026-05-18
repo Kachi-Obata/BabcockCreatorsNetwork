@@ -8,6 +8,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Benefits", href: "#benefits" },
   { label: "Creatives", href: "#creatives" },
+  { label: "Gallery", href: "/gallery" },
 ];
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
@@ -24,6 +25,11 @@ export default function Navbar() {
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
+    // Full-page navigation for route links
+    if (href.startsWith("/")) {
+      window.location.href = href;
+      return;
+    }
     if (href === "#top") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
