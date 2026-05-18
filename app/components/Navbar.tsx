@@ -59,10 +59,10 @@ export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[10000] transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[10000] transition-all duration-500 ${
           isDark
             ? "bg-[#F5F0E8]/95 backdrop-blur-[20px] shadow-sm border-b border-[#E8E4DE]"
-            : "bg-[#F5F0E8]"
+            : "bg-transparent"
         }`}
         style={{
           paddingTop: "env(safe-area-inset-top, 0px)",

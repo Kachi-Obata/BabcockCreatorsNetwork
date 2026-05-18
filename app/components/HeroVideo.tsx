@@ -51,6 +51,9 @@ export default function HeroVideo() {
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 to-black/30 z-10" />
 
+      {/* Top vignette — keeps transparent navbar text legible */}
+      <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none" />
+
       {/* End-of-video fade to black */}
       <AnimatePresence>
         {endFading && (
