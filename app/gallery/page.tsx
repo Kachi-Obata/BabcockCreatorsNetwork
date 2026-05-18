@@ -3,6 +3,45 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 
+// ── Social icons ──────────────────────────────────────────────────────────────
+const TikTokIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.95a8.15 8.15 0 004.77 1.52V7.03a4.85 4.85 0 01-1-.34z" />
+  </svg>
+);
+
+const XIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
+
+const GALLERY_SOCIALS = [
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@babcockcreators",
+    Icon: TikTokIcon,
+  },
+  {
+    label: "𝕏",
+    href: "https://x.com/babcockcreators",
+    Icon: XIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/babcockcreators",
+    Icon: InstagramIcon,
+  },
+];
+
 // ── Image sources ─────────────────────────────────────────────────────────────
 // Group A: main event shoot (64 images)
 const GROUP_A = [
@@ -258,6 +297,22 @@ export default function GalleryPage() {
         </p>
       </div>
 
+      {/* Social icon links — top right, balanced against the title */}
+      <div className="absolute top-[76px] lg:top-[86px] right-6 lg:right-10 z-[600] flex items-center gap-3 sm:gap-4">
+        {GALLERY_SOCIALS.map((s) => (
+          <a
+            key={s.label}
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            className="flex items-center justify-center w-11 h-11 rounded-full bg-white/10 hover:bg-[#AE8C07] text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm"
+          >
+            <s.Icon />
+          </a>
+        ))}
+      </div>
+
       {/* Back link — bottom left */}
       <a
         href="/"
@@ -267,30 +322,6 @@ export default function GalleryPage() {
         <span>←</span>
         <span>Back to home</span>
       </a>
-
-      {/* Bold social links — bottom right */}
-      <div className="absolute bottom-4 right-6 lg:right-10 z-[600] flex items-center gap-5 sm:gap-7">
-        {[
-          { label: "TikTok", href: "https://www.tiktok.com/@babcockcreators" },
-          { label: "X", href: "https://x.com/babcockcreators" },
-          { label: "Instagram", href: "https://www.instagram.com/babcockcreators" },
-        ].map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/50 hover:text-white transition-colors duration-200 font-bold flex items-center gap-1.5"
-            style={{
-              fontFamily: "var(--font-dm-sans)",
-              fontSize: "clamp(13px, 1.6vw, 16px)",
-            }}
-          >
-            {s.label}
-            <span className="text-white/25 text-[11px]">↗</span>
-          </a>
-        ))}
-      </div>
     </main>
   );
 }
