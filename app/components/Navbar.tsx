@@ -93,10 +93,10 @@ export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
             {backLink && (
               <button
                 onClick={() => handleNavClick(backLink.href)}
-                className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 italic ${
+                className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 ${
                   isDark
-                    ? "text-[#1A1A1A]/60 hover:text-[#003895]"
-                    : "text-white/50 hover:text-white"
+                    ? "text-[#1A1A1A] hover:text-[#003895]"
+                    : "text-white/80 hover:text-white"
                 }`}
               >
                 {backLink.label}
@@ -163,7 +163,7 @@ export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0 }}
                   onClick={() => handleNavClick(backLink.href)}
-                  className="font-[family-name:var(--font-dm-sans)] text-base italic text-white/40 hover:text-white/80 transition-colors duration-200"
+                  className="font-[family-name:var(--font-dm-sans)] text-base text-white/80 hover:text-white transition-colors duration-200"
                 >
                   {backLink.label}
                 </motion.button>
