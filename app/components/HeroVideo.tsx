@@ -7,6 +7,10 @@ const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  // Tracks whether the user deliberately turned sound on — used to restore
+  // sound when they scroll back to the hero after scrolling away.
+  const userWantedSound = useRef(false);
   const [muted, setMuted] = useState(true);
   const [videoEnded, setVideoEnded] = useState(false);
   const [endFading, setEndFading] = useState(false);
@@ -14,17 +18,15 @@ export default function HeroVideo() {
 
   const toggleMute = () => {
     if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setMuted(videoRef.current.muted);
+    const newMuted = !videoRef.current.muted;
+    videoRef.current.muted = newMuted;
+    setMuted(newMuted);
+    userWantedSound.current = !newMuted; // remember what the user chose
   };
 
   const handleEnded = () => {
     setEndFading(true);
     setTimeout(() => setVideoEnded(true), 1000);
-  };
-
-  const scrollToAbout = () => {
-    document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" });
   };
 
   // Autoplay on mount, hide overlay text after 7 seconds
@@ -34,8 +36,35 @@ export default function HeroVideo() {
     return () => clearTimeout(textTimer);
   }, []);
 
+  // Mute when the hero scrolls out of view; restore sound when it comes back
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!videoRef.current) return;
+        if (!entry.isIntersecting) {
+          // Hero is mostly off-screen — silence it
+          if (!videoRef.current.muted) {
+            videoRef.current.muted = true;
+            setMuted(true);
+          }
+        } else {
+          // Hero is back — restore the user's sound preference
+          if (userWantedSound.current && videoRef.current.muted) {
+            videoRef.current.muted = false;
+            setMuted(false);
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative w-full h-screen overflow-hidden" id="hero">
+    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden" id="hero">
       {/* Video background */}
       <video
         ref={videoRef}
@@ -73,7 +102,7 @@ export default function HeroVideo() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0 z-30 flex items-center justify-center"
+            className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-10"
           >
             <p
               className="text-white text-center"
@@ -87,6 +116,19 @@ export default function HeroVideo() {
             >
               Innovate. Create. Imagine.
             </p>
+            {/* Apply Now fades in 0.5 s after the text animation finishes (1.5 s + 0.5 s = 2 s delay) */}
+            <motion.a
+              href={WAITLIST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 2.0, ease: [0.16, 1, 0.3, 1] }}
+              className="px-10 py-[18px] rounded-full bg-[#AE8C07] text-[#1A1A1A] font-bold text-[15px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#AE8C07]/40"
+              style={{ fontFamily: "var(--font-dm-sans)" }}
+            >
+              Apply Now
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -142,25 +184,16 @@ export default function HeroVideo() {
               culture from Babcock University.
             </p>
 
-            {/* CTA buttons */}
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={scrollToAbout}
-                className="px-8 py-4 rounded-full bg-[#AE8C07] text-[#1A1A1A] font-semibold text-[14px] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#AE8C07]/30"
-                style={{ fontFamily: "var(--font-dm-sans)" }}
-              >
-                Explore Below
-              </button>
-              <a
-                href={WAITLIST_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 rounded-full border border-white/80 text-white font-semibold text-[14px] transition-all duration-200 hover:bg-white/10"
-                style={{ fontFamily: "var(--font-dm-sans)" }}
-              >
-                Apply Now
-              </a>
-            </div>
+            {/* CTA */}
+            <a
+              href={WAITLIST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 rounded-full border border-white/80 text-white font-semibold text-[14px] transition-all duration-200 hover:bg-white/10"
+              style={{ fontFamily: "var(--font-dm-sans)" }}
+            >
+              Apply Now
+            </a>
           </motion.div>
         </div>
       </div>
