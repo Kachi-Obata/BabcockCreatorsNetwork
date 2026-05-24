@@ -414,16 +414,6 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      {/* Back link — bottom left */}
-      <a
-        href="/"
-        className="absolute bottom-5 left-6 lg:left-10 z-[600] text-white/35 hover:text-white/80 transition-colors duration-300 text-[13px] flex items-center gap-2"
-        style={{ fontFamily: "var(--font-dm-sans)" }}
-      >
-        <span>←</span>
-        <span>Back to home</span>
-      </a>
-
       {/* Event toggle — bottom centre */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-[600] flex items-center gap-2">
         {(Object.keys(EVENTS) as EventKey[]).map((key) => (

@@ -163,7 +163,7 @@ export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0 }}
                   onClick={() => handleNavClick(backLink.href)}
-                  className="font-[family-name:var(--font-dm-sans)] text-base text-white/80 hover:text-white transition-colors duration-200"
+                  className="font-[family-name:var(--font-playfair)] text-3xl text-white hover:text-[#AE8C07] transition-colors duration-200"
                 >
                   {backLink.label}
                 </motion.button>
