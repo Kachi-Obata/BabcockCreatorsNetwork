@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 
 // ── Social icons ──────────────────────────────────────────────────────────────
@@ -270,7 +270,7 @@ const EVENTS = {
     eyebrow: "BCN",
     line1: "AI & BIV",
     line2: "Summit",
-    year: "",
+    year: "2026",
     columns: AIBIV_COLUMNS,
     count: AIBIV_IMAGES.length,
   },
@@ -290,6 +290,18 @@ const COL_CONFIG = [
 export default function GalleryPage() {
   const [activeEvent, setActiveEvent] = useState<EventKey>("creative");
   const event = EVENTS[activeEvent];
+
+  // After the active event's images have had a head start, quietly pre-fetch
+  // the other event so toggling feels instant (images served from browser cache)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      AIBIV_IMAGES.forEach((filename) => {
+        const img = new window.Image();
+        img.src = `/gallery/${filename}`;
+      });
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <main className="relative h-screen overflow-hidden bg-[#111111]">
@@ -494,7 +506,7 @@ function ScrollingColumn({
               // trigger past the first few. Eager loads all in parallel.
               loading="eager"
               // Prioritise the first handful that are visually on-screen
-              fetchPriority={idx < 8 ? "high" : "auto"}
+              fetchPriority={idx < 16 ? "high" : "auto"}
               decoding="async"
             />
           </div>
