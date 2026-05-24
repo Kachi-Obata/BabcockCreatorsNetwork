@@ -224,31 +224,59 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   return a;
 }
 
-// Round-robin interleave any number of groups so no single event clumps
-function interleaveAll(groups: string[][]): string[] {
+// Interleave two arrays — ~2 from A per 1 from B, matching the 64/38 ratio
+function interleave(a: string[], b: string[]): string[] {
   const out: string[] = [];
-  const max = Math.max(...groups.map((g) => g.length));
-  for (let i = 0; i < max; i++) {
-    for (const g of groups) {
-      if (i < g.length) out.push(g[i]);
-    }
+  let ai = 0;
+  let bi = 0;
+  while (ai < a.length || bi < b.length) {
+    if (ai < a.length) out.push(a[ai++]);
+    if (ai < a.length) out.push(a[ai++]);
+    if (bi < b.length) out.push(b[bi++]);
   }
   return out;
 }
 
+// Distribute a flat image list into 4 columns round-robin
+function toColumns(images: string[]): string[][] {
+  return images.reduce<string[][]>(
+    (cols, img, i) => { cols[i % 4].push(img); return cols; },
+    [[], [], [], []]
+  );
+}
+
+// ── Creative Summit (Groups A + B mixed) ──────────────────────────────────────
 const SHUFFLED_A = seededShuffle(GROUP_A, 42);
 const SHUFFLED_B = seededShuffle(GROUP_B, 137);
-const SHUFFLED_C = seededShuffle(GROUP_C, 291);
-const ALL_IMAGES = interleaveAll([SHUFFLED_A, SHUFFLED_B, SHUFFLED_C]); // 155 images, mixed
+const CREATIVE_IMAGES = interleave(SHUFFLED_A, SHUFFLED_B); // 102 images
+const CREATIVE_COLUMNS = toColumns(CREATIVE_IMAGES);
 
-// Round-robin distribute into 4 columns
-const COLUMNS: string[][] = ALL_IMAGES.reduce<string[][]>(
-  (cols, img, i) => {
-    cols[i % 4].push(img);
-    return cols;
+// ── AI & BIV Summit (Group C only) ───────────────────────────────────────────
+const SHUFFLED_C = seededShuffle(GROUP_C, 291);
+const AIBIV_IMAGES = SHUFFLED_C; // 53 images
+const AIBIV_COLUMNS = toColumns(AIBIV_IMAGES);
+
+// ── Event config ──────────────────────────────────────────────────────────────
+const EVENTS = {
+  creative: {
+    eyebrow: "BCN",
+    line1: "Creative",
+    line2: "Summit",
+    year: "2026",
+    columns: CREATIVE_COLUMNS,
+    count: CREATIVE_IMAGES.length,
   },
-  [[], [], [], []]
-);
+  aibiv: {
+    eyebrow: "BCN",
+    line1: "AI & BIV",
+    line2: "Summit",
+    year: "",
+    columns: AIBIV_COLUMNS,
+    count: AIBIV_IMAGES.length,
+  },
+} as const;
+
+type EventKey = keyof typeof EVENTS;
 
 // Each column: speed (s) and scroll direction
 const COL_CONFIG = [
@@ -260,13 +288,16 @@ const COL_CONFIG = [
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function GalleryPage() {
+  const [activeEvent, setActiveEvent] = useState<EventKey>("creative");
+  const event = EVENTS[activeEvent];
+
   return (
     <main className="relative h-screen overflow-hidden bg-[#111111]">
       <Navbar forceDark backLink={{ label: "Hub", href: "/" }} />
 
-      {/* Scrolling columns — full bleed */}
-      <div className="absolute inset-0 flex gap-[5px] sm:gap-[7px]">
-        {COLUMNS.map((images, i) => (
+      {/* Scrolling columns — remount on event change for a clean reset */}
+      <div key={activeEvent} className="absolute inset-0 flex gap-[5px] sm:gap-[7px]">
+        {event.columns.map((images, i) => (
           <div
             key={i}
             className={`overflow-hidden ${i >= 2 ? "hidden md:block md:flex-1" : "flex-1"}`}
@@ -308,7 +339,7 @@ export default function GalleryPage() {
           className="text-[#AE8C07] text-[11px] uppercase tracking-[4px] font-bold mb-2"
           style={{ fontFamily: "var(--font-dm-sans)" }}
         >
-          BCN
+          {event.eyebrow}
         </p>
         <h1 style={{ lineHeight: 0.88, letterSpacing: "-0.04em" }}>
           <span
@@ -319,7 +350,7 @@ export default function GalleryPage() {
               fontWeight: 900,
             }}
           >
-            Creative
+            {event.line1}
           </span>
           <span
             className="block text-white"
@@ -330,30 +361,32 @@ export default function GalleryPage() {
               fontStyle: "italic",
             }}
           >
-            Summit
+            {event.line2}
           </span>
-          <span
-            className="block text-white/50"
-            style={{
-              fontFamily: "var(--font-dm-sans)",
-              fontSize: "clamp(32px, 4.5vw, 68px)",
-              fontWeight: 300,
-              letterSpacing: "-0.03em",
-              marginTop: "0.08em",
-            }}
-          >
-            2026
-          </span>
+          {event.year && (
+            <span
+              className="block text-white/50"
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontSize: "clamp(32px, 4.5vw, 68px)",
+                fontWeight: 300,
+                letterSpacing: "-0.03em",
+                marginTop: "0.08em",
+              }}
+            >
+              {event.year}
+            </span>
+          )}
         </h1>
         <p
           className="mt-4 text-white/20 text-[11px] tracking-[1px]"
           style={{ fontFamily: "var(--font-dm-sans)" }}
         >
-          {ALL_IMAGES.length} works
+          {event.count} works
         </p>
       </div>
 
-      {/* Social icon links — top right, balanced against the title */}
+      {/* Social icon links — top right */}
       <div className="absolute top-[76px] lg:top-[86px] right-6 lg:right-10 z-[600] flex items-center gap-3 sm:gap-4">
         {GALLERY_SOCIALS.map((s) => (
           <a
@@ -378,6 +411,24 @@ export default function GalleryPage() {
         <span>←</span>
         <span>Back to home</span>
       </a>
+
+      {/* Event toggle — bottom centre */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-[600] flex items-center gap-2">
+        {(Object.keys(EVENTS) as EventKey[]).map((key) => (
+          <button
+            key={key}
+            onClick={() => setActiveEvent(key)}
+            className={`px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-300 backdrop-blur-sm ${
+              activeEvent === key
+                ? "bg-[#AE8C07] text-[#111111] font-bold"
+                : "bg-white/10 text-white/50 hover:bg-white/20 hover:text-white/80"
+            }`}
+            style={{ fontFamily: "var(--font-dm-sans)" }}
+          >
+            {key === "creative" ? "Creative Summit" : "AI & BIV Summit"}
+          </button>
+        ))}
+      </div>
     </main>
   );
 }
