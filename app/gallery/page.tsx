@@ -153,6 +153,63 @@ const GROUP_B = [
   "img_4443.jpg",
 ];
 
+// Group C: AI & BIV Summit (53 images)
+const GROUP_C = [
+  "gp4a1737.jpg",
+  "gp4a1738.jpg",
+  "gp4a1769.jpg",
+  "gp4a1776.jpg",
+  "gp4a1777.jpg",
+  "gp4a1782.jpg",
+  "gp4a1790.jpg",
+  "gp4a1791.jpg",
+  "gp4a1794.jpg",
+  "gp4a1815.jpg",
+  "gp4a1823.jpg",
+  "gp4a1829.jpg",
+  "gp4a1847.jpg",
+  "gp4a1883.jpg",
+  "gp4a1909.jpg",
+  "gp4a1911.jpg",
+  "gp4a1914.jpg",
+  "gp4a1940.jpg",
+  "gp4a1944.jpg",
+  "img_2122.jpg",
+  "img_5876.jpg",
+  "img_5882.jpg",
+  "img_5894.jpg",
+  "img_5899.jpg",
+  "img_5904.jpg",
+  "img_5908.jpg",
+  "img_5909.jpg",
+  "img_5911.jpg",
+  "img_5912.jpg",
+  "img_5916.jpg",
+  "img_5924.jpg",
+  "img_5926.jpg",
+  "img_5929.jpg",
+  "img_5933.jpg",
+  "img_5936.jpg",
+  "img_5938.jpg",
+  "img_5946.jpg",
+  "img_5960.jpg",
+  "img_5966.jpg",
+  "img_5969.jpg",
+  "img_5970.jpg",
+  "img_5974.jpg",
+  "img_5975.jpg",
+  "img_5980.jpg",
+  "img_5987.jpg",
+  "img_5990.jpg",
+  "img_5991.jpg",
+  "img_5992.jpg",
+  "img_5994.jpg",
+  "img_5999.jpg",
+  "img_6005.jpg",
+  "img_6011.jpg",
+  "img_6012.jpg",
+];
+
 // ── Seeded shuffle (deterministic but not alphabetical) ───────────────────────
 function seededShuffle<T>(arr: T[], seed: number): T[] {
   const a = [...arr];
@@ -167,23 +224,22 @@ function seededShuffle<T>(arr: T[], seed: number): T[] {
   return a;
 }
 
-// Interleave two arrays so neither clumps at one end
-function interleave(a: string[], b: string[]): string[] {
+// Round-robin interleave any number of groups so no single event clumps
+function interleaveAll(groups: string[][]): string[] {
   const out: string[] = [];
-  let ai = 0;
-  let bi = 0;
-  while (ai < a.length || bi < b.length) {
-    // ~2 from Group A for every 1 from Group B, matching the 64/38 ratio
-    if (ai < a.length) out.push(a[ai++]);
-    if (ai < a.length) out.push(a[ai++]);
-    if (bi < b.length) out.push(b[bi++]);
+  const max = Math.max(...groups.map((g) => g.length));
+  for (let i = 0; i < max; i++) {
+    for (const g of groups) {
+      if (i < g.length) out.push(g[i]);
+    }
   }
   return out;
 }
 
 const SHUFFLED_A = seededShuffle(GROUP_A, 42);
 const SHUFFLED_B = seededShuffle(GROUP_B, 137);
-const ALL_IMAGES = interleave(SHUFFLED_A, SHUFFLED_B); // 102 images, mixed
+const SHUFFLED_C = seededShuffle(GROUP_C, 291);
+const ALL_IMAGES = interleaveAll([SHUFFLED_A, SHUFFLED_B, SHUFFLED_C]); // 155 images, mixed
 
 // Round-robin distribute into 4 columns
 const COLUMNS: string[][] = ALL_IMAGES.reduce<string[][]>(
