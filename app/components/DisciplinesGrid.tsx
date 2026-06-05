@@ -125,13 +125,13 @@ export default function DisciplinesGrid() {
           </motion.p>
         </div>
 
-        {/* Body copy — bottom-left */}
+        {/* Body copy — bottom-right */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOptions}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-[380px] lg:max-w-[340px] mt-12 lg:mt-16"
+          className="max-w-[380px] lg:max-w-[340px] mt-12 lg:mt-16 lg:ml-auto"
         >
           <p
             className="text-white/40 text-[15px] lg:text-[16px] leading-[1.8]"
