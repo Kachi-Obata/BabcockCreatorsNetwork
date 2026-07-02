@@ -15,7 +15,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative bg-[#F5F0E8] overflow-hidden pt-24 pb-28"
+      className="relative z-[2] bg-[#F5F0E8] overflow-hidden pt-24 pb-28"
     >
       {/* Camera icon — peeks in from the right edge */}
       <div

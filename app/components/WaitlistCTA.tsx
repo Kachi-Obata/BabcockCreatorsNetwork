@@ -29,8 +29,8 @@ export default function WaitlistCTA() {
   return (
     <section
       id="join"
-      className="relative py-[120px] px-6 lg:px-10 overflow-hidden"
-      style={{ background: "#003895" }}
+      className="relative z-[6] min-h-screen py-[120px] px-6 lg:px-10 overflow-hidden flex flex-col justify-center"
+      style={{ background: "#003895", willChange: "transform" }}
     >
       {/* Studio speaker — peeks in from the left edge */}
       <div

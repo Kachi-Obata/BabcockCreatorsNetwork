@@ -36,35 +36,31 @@ export default function HeroVideo() {
     return () => clearTimeout(textTimer);
   }, []);
 
-  // Mute when the hero scrolls out of view; restore sound when it comes back
+  // Mute when the hero is mostly covered by the section scrolling over it;
+  // restore sound when the user scrolls back up. Uses scroll position instead
+  // of IntersectionObserver because the hero is sticky and always in-viewport.
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!videoRef.current) return;
-        if (!entry.isIntersecting) {
-          // Hero is mostly off-screen — silence it
-          if (!videoRef.current.muted) {
-            videoRef.current.muted = true;
-            setMuted(true);
-          }
-        } else {
-          // Hero is back — restore the user's sound preference
-          if (userWantedSound.current && videoRef.current.muted) {
-            videoRef.current.muted = false;
-            setMuted(false);
-          }
+    const handleScroll = () => {
+      if (!videoRef.current) return;
+      const covered = window.scrollY > window.innerHeight * 0.3;
+      if (covered) {
+        if (!videoRef.current.muted) {
+          videoRef.current.muted = true;
+          setMuted(true);
         }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
+      } else {
+        if (userWantedSound.current && videoRef.current.muted) {
+          videoRef.current.muted = false;
+          setMuted(false);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden" id="hero">
+    <section ref={sectionRef} className="sticky top-0 z-[1] w-full h-screen overflow-hidden" id="hero">
       {/* Video background */}
       <video
         ref={videoRef}

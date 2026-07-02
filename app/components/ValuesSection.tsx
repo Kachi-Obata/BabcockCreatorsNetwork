@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
 import { VinylRecordIcon, PencilIcon } from "./CreativeIcons";
+import { useStickyScroll } from "../lib/useStickyScroll";
 
 const values = [
   {
@@ -38,10 +39,18 @@ const values = [
 ];
 
 export default function ValuesSection() {
+  const { wrapperRef, contentRef, wrapperHeight, translateY } = useStickyScroll();
+
   return (
-    <section
-      className="relative bg-[#F5F0E8] overflow-hidden pt-24 pb-28"
-    >
+    <div ref={wrapperRef} style={{ height: wrapperHeight }}>
+      <section
+        className="sticky top-0 z-[5] h-screen overflow-hidden bg-[#F5F0E8]"
+      >
+        <div
+          ref={contentRef}
+          className="relative pt-24 pb-28"
+          style={{ transform: `translateY(${translateY}px)`, willChange: "transform" }}
+        >
       {/* Vinyl record — peeks in from the left edge */}
       <div
         className="absolute pointer-events-none select-none"
@@ -226,6 +235,8 @@ export default function ValuesSection() {
           </motion.div>
         ))}
       </motion.div>
-    </section>
+        </div>
+      </section>
+    </div>
   );
 }

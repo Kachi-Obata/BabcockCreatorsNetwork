@@ -41,7 +41,7 @@ export default function BenefitsSection() {
   return (
     <section
       id="benefits"
-      className="relative bg-white overflow-hidden pt-24 pb-28"
+      className="relative z-[4] bg-white overflow-hidden pt-24 pb-28"
     >
       {/* Clapperboard icon — peeks in from the left edge */}
       <div

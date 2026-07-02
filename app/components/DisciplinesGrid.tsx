@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { viewportOptions } from "../lib/animations";
 import { FountainPenIcon, MicrophoneIcon } from "./CreativeIcons";
+import { useStickyScroll } from "../lib/useStickyScroll";
 
 const disciplines = [
   { name: "Photography", desc: "Portraits, editorials, street & documentary" },
@@ -16,11 +17,19 @@ const disciplines = [
 ];
 
 export default function DisciplinesGrid() {
+  const { wrapperRef, contentRef, wrapperHeight, translateY } = useStickyScroll();
+
   return (
-    <section
-      id="creatives"
-      className="relative bg-[#1A1A1A] overflow-hidden pt-24 pb-28"
-    >
+    <div ref={wrapperRef} style={{ height: wrapperHeight }}>
+      <section
+        id="creatives"
+        className="sticky top-0 z-[3] h-screen overflow-hidden bg-[#1A1A1A]"
+      >
+        <div
+          ref={contentRef}
+          className="relative pt-24 pb-28"
+          style={{ transform: `translateY(${translateY}px)`, willChange: "transform" }}
+        >
       {/* Microphone icon — peeks in from the left edge */}
       <div
         className="absolute pointer-events-none select-none"
@@ -172,6 +181,8 @@ export default function DisciplinesGrid() {
           </div>
         ))}
       </motion.div>
-    </section>
+        </div>
+      </section>
+    </div>
   );
 }

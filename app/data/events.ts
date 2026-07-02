@@ -32,8 +32,8 @@ export const events: BCNEvent[] = [
     tagline: "Where technology met creative ambition.",
     description:
       "A full-day summit bringing together Babcock's brightest creative and tech minds to explore the intersection of artificial intelligence and creative practice. Panels, demos, live experiments, and conversations that mattered.",
-    date: "March 2026",
-    dateISO: "2026-03-01",
+    date: "April 21–22, 2026",
+    dateISO: "2026-04-21",
     venue: "Babcock University, Main Campus",
     type: "co-hosted",
     status: "past",
@@ -54,8 +54,8 @@ export const events: BCNEvent[] = [
     tagline: "The room where it happened.",
     description:
       "BCN's flagship event of the pilot session. A showcase of creative work, panel discussions, networking, and the official public debut of the Babcock Creators Network to the university community.",
-    date: "2026",
-    dateISO: "2026-04-01",
+    date: "March 29, 2026",
+    dateISO: "2026-03-29",
     venue: "Babcock University",
     type: "bcn-hosted",
     status: "past",
