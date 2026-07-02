@@ -1,9 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 
+// Renders: <trigger(h=0) /> <section sticky /> <spacer(h=maxScroll) />
+// The trigger marks where sticking starts; scroll progress = -trigger.top.
+// The spacer (same z-context as surrounding content) provides scroll budget
+// so the next section enters the viewport exactly when content is fully revealed,
+// letting the sticky section stay put while the next section slides over it.
 export function useStickyScroll() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [wrapperHeight, setWrapperHeight] = useState("200vh");
+  const [maxScroll, setMaxScroll] = useState(0);
   const [translateY, setTranslateY] = useState(0);
 
   useEffect(() => {
@@ -11,14 +16,12 @@ export function useStickyScroll() {
     if (!content) return;
 
     const measure = () => {
-      setWrapperHeight(`${content.scrollHeight + window.innerHeight}px`);
+      setMaxScroll(Math.max(0, content.scrollHeight - window.innerHeight));
     };
-
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(content);
     window.addEventListener("resize", measure);
-
     return () => {
       ro.disconnect();
       window.removeEventListener("resize", measure);
@@ -27,22 +30,14 @@ export function useStickyScroll() {
 
   useEffect(() => {
     const onScroll = () => {
-      const wrapper = wrapperRef.current;
-      const content = contentRef.current;
-      if (!wrapper || !content) return;
-
-      const scrolled = -wrapper.getBoundingClientRect().top;
-      if (scrolled <= 0) {
-        setTranslateY(0);
-        return;
-      }
-      const maxScroll = Math.max(0, content.scrollHeight - window.innerHeight);
+      const trigger = triggerRef.current;
+      if (!trigger) return;
+      const scrolled = Math.max(0, -trigger.getBoundingClientRect().top);
       setTranslateY(-Math.min(scrolled, maxScroll));
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [maxScroll]);
 
-  return { wrapperRef, contentRef, wrapperHeight, translateY };
+  return { triggerRef, contentRef, spacerHeight: maxScroll, translateY };
 }

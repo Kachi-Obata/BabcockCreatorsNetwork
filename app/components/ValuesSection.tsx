@@ -39,10 +39,11 @@ const values = [
 ];
 
 export default function ValuesSection() {
-  const { wrapperRef, contentRef, wrapperHeight, translateY } = useStickyScroll();
+  const { triggerRef, contentRef, spacerHeight, translateY } = useStickyScroll();
 
   return (
-    <div ref={wrapperRef} style={{ height: wrapperHeight }}>
+    <>
+      <div ref={triggerRef} aria-hidden />
       <section
         className="sticky top-0 z-[5] h-screen overflow-hidden bg-[#F5F0E8]"
       >
@@ -237,6 +238,7 @@ export default function ValuesSection() {
       </motion.div>
         </div>
       </section>
-    </div>
+      <div aria-hidden style={{ height: spacerHeight }} />
+    </>
   );
 }

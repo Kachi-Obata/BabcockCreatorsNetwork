@@ -17,10 +17,11 @@ const disciplines = [
 ];
 
 export default function DisciplinesGrid() {
-  const { wrapperRef, contentRef, wrapperHeight, translateY } = useStickyScroll();
+  const { triggerRef, contentRef, spacerHeight, translateY } = useStickyScroll();
 
   return (
-    <div ref={wrapperRef} style={{ height: wrapperHeight }}>
+    <>
+      <div ref={triggerRef} aria-hidden />
       <section
         id="creatives"
         className="sticky top-0 z-[3] h-screen overflow-hidden bg-[#1A1A1A]"
@@ -183,6 +184,7 @@ export default function DisciplinesGrid() {
       </motion.div>
         </div>
       </section>
-    </div>
+      <div aria-hidden style={{ height: spacerHeight }} />
+    </>
   );
 }

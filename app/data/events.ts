@@ -71,10 +71,10 @@ export const events: BCNEvent[] = [
   },
   {
     id: "framexpo-campus-storm-2026",
-    title: "FrameExpo Campus Storm",
+    title: "FrameXpo Campus Storm",
     tagline: "The academy is coming to campus.",
     description:
-      "FrameExpo brings its Academy program to Babcock — a hands-on creative experience for photographers, filmmakers, and visual storytellers. BCN members who express interest will be directed to the FrameExpo Academy registration page to secure their spot.",
+      "FrameXpo brings its Academy program to Babcock — a hands-on creative experience for photographers, filmmakers, and visual storytellers. BCN members who express interest will be directed to the FrameXpo Academy registration page to secure their spot.",
     date: "July 5, 2026",
     dateISO: "2026-07-05",
     time: "Sunday",
@@ -82,7 +82,7 @@ export const events: BCNEvent[] = [
     type: "co-hosted",
     status: "upcoming",
     disciplines: ["Photography", "Film", "Visual Arts"],
-    organizer: "FrameExpo",
+    organizer: "FrameXpo",
     externalRegistrationUrl: "https://framexpo.co/academy/",
   },
   {
