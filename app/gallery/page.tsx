@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Navbar from "../components/Navbar";
 
 // ── Social icons ──────────────────────────────────────────────────────────────
@@ -299,9 +300,17 @@ const COL_CONFIG = [
 ];
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default function GalleryPage() {
+function GalleryContent() {
   const [activeEvent, setActiveEvent] = useState<EventKey>("creative");
   const event = EVENTS[activeEvent];
+
+  // Auto-select event based on query param (e.g. from /events "Catch Highlights" link)
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const slug = searchParams.get("event");
+    if (slug === "creative-summit-2026") setActiveEvent("creative");
+    else if (slug === "ai-biv-summit-2026") setActiveEvent("aibiv");
+  }, [searchParams]);
 
   // After the active event's images have had a head start, quietly pre-fetch
   // the other event so toggling feels instant (images served from browser cache)
@@ -444,6 +453,14 @@ export default function GalleryPage() {
         ))}
       </div>
     </main>
+  );
+}
+
+export default function GalleryPage() {
+  return (
+    <Suspense>
+      <GalleryContent />
+    </Suspense>
   );
 }
 

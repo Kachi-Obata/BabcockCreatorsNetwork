@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,6 +10,7 @@ const navLinks = [
   { label: "Benefits", href: "#benefits" },
   { label: "Creatives", href: "#creatives" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Events", href: "/events" },
 ];
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
@@ -24,6 +26,7 @@ interface NavbarProps {
 export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   // isDark drives all colour decisions — true when scrolled OR when the
   // page forces the dark treatment (gallery, etc.)
@@ -102,19 +105,24 @@ export default function Navbar({ forceDark = false, backLink }: NavbarProps) {
                 {backLink.label}
               </button>
             )}
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 ${
-                  isDark
-                    ? "text-[#1A1A1A] hover:text-[#003895]"
-                    : "text-white/80 hover:text-white"
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.href.startsWith("/") && pathname === link.href;
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`font-[family-name:var(--font-dm-sans)] text-[14px] font-medium transition-colors duration-200 ${
+                    isActive
+                      ? "text-[#003895]"
+                      : isDark
+                      ? "text-[#1A1A1A] hover:text-[#003895]"
+                      : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
             <a
               href={WAITLIST_URL}
               target="_blank"
