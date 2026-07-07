@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { events, BCNEvent } from "../data/events";
+import { events, BCNEvent, getEventStatus } from "../data/events";
 import InterestForm from "../components/InterestForm";
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
@@ -15,8 +15,9 @@ type Filter = "all" | "upcoming" | "past";
 function sortEvents(evts: BCNEvent[]): BCNEvent[] {
   return [...evts].sort((a, b) => {
     const order = { upcoming: 0, ongoing: 1, past: 2 };
-    if (a.status !== b.status) return order[a.status] - order[b.status];
-    if (a.status === "past") return b.dateISO.localeCompare(a.dateISO);
+    const sa = getEventStatus(a), sb = getEventStatus(b);
+    if (sa !== sb) return order[sa] - order[sb];
+    if (sa === "past") return b.dateISO.localeCompare(a.dateISO);
     return a.dateISO.localeCompare(b.dateISO);
   });
 }
@@ -92,9 +93,10 @@ function EventActions({ event }: { event: BCNEvent }) {
   const [emailOpen, setEmailOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const status = getEventStatus(event);
 
   // Case 4: ongoing
-  if (event.status === "ongoing") {
+  if (status === "ongoing") {
     return (
       <a
         href={event.externalRegistrationUrl || "#"}
@@ -107,7 +109,7 @@ function EventActions({ event }: { event: BCNEvent }) {
   }
 
   // Case 3: past
-  if (event.status === "past") {
+  if (status === "past") {
     return (
       <div className="flex flex-col gap-3">
         {event.galleryEventSlug && (
@@ -157,7 +159,7 @@ function EventActions({ event }: { event: BCNEvent }) {
   }
 
   // Case 1: bcn-hosted + upcoming
-  if (event.type === "bcn-hosted" && event.status === "upcoming") {
+  if (event.type === "bcn-hosted" && status === "upcoming") {
     return (
       <div className="flex flex-col gap-3 items-start">
         <button
@@ -228,7 +230,7 @@ function EventActions({ event }: { event: BCNEvent }) {
   }
 
   // Case 2: co-hosted / external + upcoming
-  if ((event.type === "co-hosted" || event.type === "external") && event.status === "upcoming") {
+  if ((event.type === "co-hosted" || event.type === "external") && status === "upcoming") {
     if (!event.externalRegistrationUrl) {
       return (
         <button
@@ -254,6 +256,7 @@ function EventActions({ event }: { event: BCNEvent }) {
 
 // Desktop row
 function EventRow({ event, index }: { event: BCNEvent; index: number }) {
+  const status = getEventStatus(event);
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -277,7 +280,7 @@ function EventRow({ event, index }: { event: BCNEvent; index: number }) {
           >
             {event.date}
           </p>
-          <StatusBadge status={event.status} />
+          <StatusBadge status={status} />
         </div>
 
         {/* Col 2: Info */}
@@ -340,7 +343,7 @@ function EventRow({ event, index }: { event: BCNEvent; index: number }) {
         style={{ background: "#111111", border: "1px solid #222222" }}
       >
         <div className="flex items-center justify-between mb-3">
-          <StatusBadge status={event.status} />
+          <StatusBadge status={status} />
           <p
             style={{ fontFamily: "var(--font-dm-sans)", fontSize: "12px", color: "#AE8C07", fontWeight: 700 }}
           >
@@ -383,7 +386,7 @@ export default function EventsContent() {
   const [filter, setFilter] = useState<Filter>("all");
 
   const sorted = sortEvents(events);
-  const filtered = filter === "all" ? sorted : sorted.filter((e) => e.status === filter);
+  const filtered = filter === "all" ? sorted : sorted.filter((e) => getEventStatus(e) === filter);
 
   const tabs: { key: Filter; label: string }[] = [
     { key: "all", label: "ALL" },

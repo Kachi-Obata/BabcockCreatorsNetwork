@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 async function syncToBrevo(full_name: string, email: string, event_id: string) {
   const apiKey = process.env.BREVO_API_KEY;
@@ -39,7 +41,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
-  const { error } = await supabase.from("interest_submissions").insert({
+  const { error } = await getSupabase().from("interest_submissions").insert({
     full_name: full_name.trim(),
     email: email.trim().toLowerCase(),
     whatsapp: whatsapp.trim(),
