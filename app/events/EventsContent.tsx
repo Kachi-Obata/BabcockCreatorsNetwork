@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { events, BCNEvent } from "../data/events";
+import InterestForm from "../components/InterestForm";
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 
@@ -244,19 +245,7 @@ function EventActions({ event }: { event: BCNEvent }) {
       );
     }
     return (
-      <a
-        href={event.externalRegistrationUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block px-4 py-2 text-[12px] font-bold rounded transition-opacity duration-200 hover:opacity-90"
-        style={{
-          background: "#AE8C07",
-          color: "#1A1A1A",
-          fontFamily: "var(--font-dm-sans)",
-        }}
-      >
-        Register Now ↗
-      </a>
+      <InterestForm eventId={event.id} redirectUrl={event.externalRegistrationUrl} />
     );
   }
 

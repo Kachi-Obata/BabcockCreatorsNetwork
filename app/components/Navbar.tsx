@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Creatives", href: "#creatives" },
   { label: "Gallery", href: "/gallery" },
   { label: "Events", href: "/events" },
+  { label: "Newsletter", href: "/newsletter" },
 ];
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
