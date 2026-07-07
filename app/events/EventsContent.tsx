@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { events, BCNEvent, getEventStatus } from "../data/events";
+import { events, BCNEvent, EventStatus, getEventStatus } from "../data/events";
 import InterestForm from "../components/InterestForm";
 
 const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
@@ -22,7 +22,7 @@ function sortEvents(evts: BCNEvent[]): BCNEvent[] {
   });
 }
 
-function StatusBadge({ status }: { status: BCNEvent["status"] }) {
+function StatusBadge({ status }: { status: EventStatus }) {
   if (status === "upcoming") {
     return (
       <span
