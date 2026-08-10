@@ -205,7 +205,7 @@ export default function HeroVideo() {
         {!videoEnded && buttonCentered && (
           <div
             key="btn-center"
-            className="absolute inset-0 z-[19] flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 z-[19] flex items-end justify-center pb-12 pointer-events-none"
           >
             <motion.a
               layoutId="hero-cta-btn"
