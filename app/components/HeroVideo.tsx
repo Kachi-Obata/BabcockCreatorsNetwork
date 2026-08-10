@@ -74,14 +74,24 @@ export default function HeroVideo() {
       <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none" />
 
       {/* End-of-video fade to black */}
+      {/* End-of-video: hero photo fades in over the video */}
       <AnimatePresence>
         {endFading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 bg-black z-20"
-          />
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0 z-20"
+          >
+            {/* Background photo */}
+            <img
+              src="/BCN-hero-photo-2.jpg"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Dark overlay so text stays readable */}
+            <div className="absolute inset-0 bg-black/55" />
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -113,8 +123,11 @@ export default function HeroVideo() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2.0, ease: [0.16, 1, 0.3, 1] }}
-              className="px-10 py-[18px] rounded-full bg-[#AE8C07] text-[#1A1A1A] font-bold text-[15px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#AE8C07]/40"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
+              className="px-10 py-[18px] rounded-full font-semibold text-[15px] text-white transition-colors duration-200 hover:bg-white/10"
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                border: "1px solid rgba(255,255,255,0.8)",
+              }}
             >
               Apply Now
             </motion.a>
