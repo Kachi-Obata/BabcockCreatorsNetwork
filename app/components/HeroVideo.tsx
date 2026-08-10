@@ -8,20 +8,19 @@ const WAITLIST_URL = "https://forms.gle/BL2zJmTDnoG3wjG16";
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  // Tracks whether the user deliberately turned sound on — used to restore
-  // sound when they scroll back to the hero after scrolling away.
   const userWantedSound = useRef(false);
   const [muted, setMuted] = useState(true);
   const [videoEnded, setVideoEnded] = useState(false);
   const [endFading, setEndFading] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(true);
+  const [buttonCentered, setButtonCentered] = useState(false);
 
   const toggleMute = () => {
     if (!videoRef.current) return;
     const newMuted = !videoRef.current.muted;
     videoRef.current.muted = newMuted;
     setMuted(newMuted);
-    userWantedSound.current = !newMuted; // remember what the user chose
+    userWantedSound.current = !newMuted;
   };
 
   const handleEnded = () => {
@@ -29,30 +28,25 @@ export default function HeroVideo() {
     setTimeout(() => setVideoEnded(true), 1000);
   };
 
-  // Autoplay on mount, hide overlay text after 7 seconds
+  // Autoplay; fade overlay text after 7s and send button to centre
   useEffect(() => {
     videoRef.current?.play().catch(() => {});
-    const textTimer = setTimeout(() => setOverlayVisible(false), 7000);
-    return () => clearTimeout(textTimer);
+    const timer = setTimeout(() => {
+      setOverlayVisible(false);
+      setButtonCentered(true);
+    }, 7000);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Mute when the hero is mostly covered by the section scrolling over it;
-  // restore sound when the user scrolls back up. Uses scroll position instead
-  // of IntersectionObserver because the hero is sticky and always in-viewport.
+  // Mute when scrolled past hero
   useEffect(() => {
     const handleScroll = () => {
       if (!videoRef.current) return;
       const covered = window.scrollY > window.innerHeight * 0.3;
       if (covered) {
-        if (!videoRef.current.muted) {
-          videoRef.current.muted = true;
-          setMuted(true);
-        }
+        if (!videoRef.current.muted) { videoRef.current.muted = true; setMuted(true); }
       } else {
-        if (userWantedSound.current && videoRef.current.muted) {
-          videoRef.current.muted = false;
-          setMuted(false);
-        }
+        if (userWantedSound.current && videoRef.current.muted) { videoRef.current.muted = false; setMuted(false); }
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -61,7 +55,7 @@ export default function HeroVideo() {
 
   return (
     <section ref={sectionRef} className="sticky top-0 z-[1] w-full h-screen overflow-hidden" id="hero">
-      {/* Video background */}
+      {/* Video */}
       <video
         ref={videoRef}
         src="/bcn_hero_video.mp4"
@@ -73,10 +67,10 @@ export default function HeroVideo() {
         onEnded={handleEnded}
       />
 
-      {/* Dark gradient overlay */}
+      {/* Dark gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 to-black/30 z-10" />
 
-      {/* Top vignette — keeps transparent navbar text legible */}
+      {/* Top vignette */}
       <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/40 to-transparent z-10 pointer-events-none" />
 
       {/* End-of-video fade to black */}
@@ -112,7 +106,6 @@ export default function HeroVideo() {
             >
               Innovate. Create. Imagine.
             </p>
-            {/* Apply Now fades in 0.5 s after the text animation finishes (1.5 s + 0.5 s = 2 s delay) */}
             <motion.a
               href={WAITLIST_URL}
               target="_blank"
@@ -129,9 +122,9 @@ export default function HeroVideo() {
         )}
       </AnimatePresence>
 
-      {/* Hero overlay content — visible for 7s after video starts, then fades */}
+      {/* Overlay text — fades out after 7s. Button is NOT here. */}
       <div
-        className={`absolute inset-0 z-20 flex items-center transition-opacity duration-[1200ms] ease-in-out ${
+        className={`absolute inset-0 z-[18] flex items-center transition-opacity duration-[1200ms] ease-in-out ${
           !overlayVisible || videoEnded ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
@@ -142,15 +135,12 @@ export default function HeroVideo() {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[620px]"
           >
-            {/* Overline */}
             <p
               className="mb-5 text-[#AE8C07] uppercase tracking-[6px] text-[12px] font-semibold"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
               Babcock Creators Network
             </p>
-
-            {/* Headline */}
             <h1
               className="text-white mb-6"
               style={{
@@ -162,14 +152,10 @@ export default function HeroVideo() {
               }}
             >
               Where Talent Becomes{" "}
-              <em className="not-italic" style={{ fontStyle: "italic" }}>
-                Legacy
-              </em>
+              <em style={{ fontStyle: "italic" }}>Legacy</em>
             </h1>
-
-            {/* Subtext */}
             <p
-              className="mb-10 text-white/70 leading-relaxed max-w-[480px]"
+              className="text-white/70 leading-relaxed max-w-[480px]"
               style={{
                 fontFamily: "var(--font-dm-sans)",
                 fontSize: "clamp(15px, 2vw, 18px)",
@@ -179,20 +165,73 @@ export default function HeroVideo() {
               A system, not just a community. Discover the creators shaping
               culture from Babcock University.
             </p>
-
-            {/* CTA */}
-            <a
-              href={WAITLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 rounded-full border border-white/80 text-white font-semibold text-[14px] transition-all duration-200 hover:bg-white/10"
-              style={{ fontFamily: "var(--font-dm-sans)" }}
-            >
-              Apply Now
-            </a>
           </motion.div>
         </div>
       </div>
+
+      {/* Apply Now button — lives outside the fading overlay, uses layoutId FLIP to animate position */}
+      <AnimatePresence>
+        {!videoEnded && !buttonCentered && (
+          <div
+            key="btn-left"
+            className="absolute inset-0 z-[19] flex items-end pb-[30vh] pointer-events-none"
+          >
+            <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
+              <motion.a
+                layoutId="hero-cta-btn"
+                href={WAITLIST_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pointer-events-auto inline-block whitespace-nowrap rounded-full font-semibold"
+                animate={{
+                  backgroundColor: "transparent",
+                  color: "#ffffff",
+                  paddingInline: "32px",
+                  paddingBlock: "16px",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  fontFamily: "var(--font-dm-sans)",
+                  border: "1px solid rgba(255,255,255,0.8)",
+                }}
+              >
+                Apply Now
+              </motion.a>
+            </div>
+          </div>
+        )}
+        {!videoEnded && buttonCentered && (
+          <div
+            key="btn-center"
+            className="absolute inset-0 z-[19] flex items-center justify-center pointer-events-none"
+          >
+            <motion.a
+              layoutId="hero-cta-btn"
+              href={WAITLIST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pointer-events-auto inline-block whitespace-nowrap rounded-full font-bold hover:shadow-xl hover:shadow-[#AE8C07]/40"
+              animate={{
+                backgroundColor: "#AE8C07",
+                color: "#1A1A1A",
+                paddingInline: "40px",
+                paddingBlock: "18px",
+                fontSize: "15px",
+                fontWeight: 700,
+              }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                border: "1px solid transparent",
+              }}
+            >
+              Apply Now
+            </motion.a>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Mute toggle */}
       <button
@@ -214,7 +253,6 @@ export default function HeroVideo() {
           </svg>
         )}
       </button>
-
     </section>
   );
 }
