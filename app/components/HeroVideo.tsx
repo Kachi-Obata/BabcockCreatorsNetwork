@@ -212,19 +212,19 @@ export default function HeroVideo() {
               href={WAITLIST_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="pointer-events-auto inline-block whitespace-nowrap rounded-full font-bold hover:shadow-xl hover:shadow-[#AE8C07]/40"
+              className="pointer-events-auto inline-block whitespace-nowrap rounded-full font-semibold hover:bg-white/10"
               animate={{
-                backgroundColor: "#AE8C07",
-                color: "#1A1A1A",
+                backgroundColor: "transparent",
+                color: "#ffffff",
                 paddingInline: "40px",
                 paddingBlock: "18px",
                 fontSize: "15px",
-                fontWeight: 700,
+                fontWeight: 600,
               }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 fontFamily: "var(--font-dm-sans)",
-                border: "1px solid transparent",
+                border: "1px solid rgba(255,255,255,0.8)",
               }}
             >
               Apply Now
