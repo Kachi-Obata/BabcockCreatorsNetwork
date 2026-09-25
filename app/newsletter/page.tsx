@@ -28,14 +28,32 @@ function CategoryTag({ label }: { label: string }) {
 
 function PostBody({ body }: { body: string }) {
   const lines = body.split("\n\n").filter(Boolean);
+  const imageRe = /^!\[([^\]]*)\]\(([^)]+)\)$/;
+
   return (
     <div className="mt-8 space-y-5">
       {lines.map((block, i) => {
+        const imageMatch = block.match(imageRe);
+        if (imageMatch) {
+          const [, alt, src] = imageMatch;
+          return (
+            <figure key={i} className="!mt-8 !mb-8 -mx-6 md:mx-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={alt}
+                className="w-full md:rounded-lg object-cover"
+                loading="lazy"
+              />
+            </figure>
+          );
+        }
+
         if (block.startsWith("**") && block.endsWith("**")) {
           return (
             <h4
               key={i}
-              className="text-[15px] font-semibold"
+              className="text-[15px] font-semibold !mt-10"
               style={{ color: "#F5F0E8", fontFamily: "var(--font-dm-sans)" }}
             >
               {block.replace(/\*\*/g, "")}
@@ -140,6 +158,16 @@ export default function NewsletterPage() {
                       </>
                     )}
                   </div>
+
+                  {post.coverImage && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={post.coverImage}
+                      alt={post.title}
+                      className="w-full rounded-lg object-cover mb-8"
+                      loading="lazy"
+                    />
+                  )}
 
                   <h2
                     className="leading-tight tracking-tight mb-4"
