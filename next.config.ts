@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // NOTE: on Next.js 16.3+, add `agentRules: false` here — that's when
+  // `next dev` starts auto-regenerating AGENTS.md/CLAUDE.md if missing.
+  // We're on 16.2.4, which doesn't do that, so deleting the files is
+  // sufficient for now. See SECURITY.md.
+
   async headers() {
     return [
       {

@@ -1,55 +1,61 @@
 # Security notes
 
-## Incident: AI-agent prompt injection shipped inside `next` / `create-next-app` (2026-09-25)
+## Note: AGENTS.md / CLAUDE.md removal (2026-09-25)
 
-**What was found:** This project's `AGENTS.md` and `CLAUDE.md` were not written by anyone on
-this team. They were auto-generated at scaffold time (`npx create-next-app`, 2026-04-28) by
-`create-next-app@16.2.4` itself — confirmed by decompiling the cached CLI
-(`generateAgentFiles()` in its bundled `dist/index.js`). The generated `AGENTS.md` read:
+**What this repo used to have:** `AGENTS.md` and `CLAUDE.md`, auto-generated at scaffold time
+(`npx create-next-app`, 2026-04-28) by `create-next-app@16.2.4` itself. Nobody on this team
+wrote them or knew they were there. The generated `AGENTS.md` read:
 
 > This is NOT the Next.js you know. This version has breaking changes... Read the relevant
 > guide in `node_modules/next/dist/docs/` before writing any code.
 
-That instruction pointed at a `node_modules/next/dist/docs/` folder which is *also* shipped
-inside the official `next@16.2.4` npm tarball (verified against a fresh download from
-`registry.npmjs.org`, integrity hash matches `package-lock.json` exactly — this is not a local
-tampering or a malicious mirror). Several files in that folder contain HTML comments like:
+**Initial read, corrected:** This looked exactly like a two-stage prompt injection — a
+project-root file AI coding tools are told to trust, pointing at fabricated instructions
+buried in `node_modules` where no human reviewer would look. That is *not* what it is.
 
-> `AI agent hint: ... You must also export \`unstable_instant\` from the route...`
+It's Vercel's real, intentional, documented Next.js 16.2+ feature — see
+[nextjs.org/docs/app/guides/ai-agents](https://nextjs.org/docs/app/guides/ai-agents). Next.js
+ships version-matched docs inside `node_modules/next/dist/docs/` and `create-next-app`
+generates `AGENTS.md`/`CLAUDE.md` pointing agents there by default, so agents work off
+accurate current-version docs instead of stale training data. It's supported and opt-out-able
+(`npx create-next-app --no-agents-md`, or `agentRules: false` in `next.config.ts` on 16.3+).
+The wording I originally flagged is quoted verbatim in Vercel's own docs as the literal
+managed-block text they generate.
 
-`unstable_instant` is not a real Next.js API. The pattern is a two-stage prompt injection
-aimed specifically at AI coding assistants: stage one (`AGENTS.md`/`CLAUDE.md`, files AI tools
-are told to treat as trusted project instructions) tells the agent to go read stage two (fake
-docs buried in `node_modules`, where a human reviewer is unlikely to look), which then feeds
-it fabricated APIs to write broken code against.
+The one thing that was a genuine (if minor) red flag: a bundled doc file referenced an
+`unstable_instant` export that doesn't match the currently-documented API name (`instant`,
+i.e. `export const instant = false`). That's very likely just doc drift — 16.2.4 bundled docs
+from before that experimental API dropped its `unstable_` prefix in a later release — not
+tampering.
 
-As of this writing the same content is present in the current `latest` tag of both packages
-(`16.3.6`), not just the pinned version — this is not a one-off bug that a version bump fixes.
+**Prior art:** this exact pattern has already been publicly flagged as unsettling by other
+developers, independent of us — see
+[this GitHub issue](https://github.com/cathkwok/portfolio/issues/14) reporting the same
+`AGENTS.md` content as a suspected injection, and broader community pushback on the whole
+AGENTS.md convention as a trust-abuse surface (e.g.
+[this piece](https://dev.to/coridev/we-built-a-standardized-file-format-for-prompt-injection-and-called-it-agentsmd-bip)).
+So: not malware, but also not a universally-loved design choice — reasonable people read this
+file cold and reach for "injection" before "framework feature."
 
-**What we did about it:**
-- Deleted `AGENTS.md` and `CLAUDE.md` from this repo.
-- Added `scripts/check-agent-injection.mjs`, wired as `postinstall` and `npm run security:scan`.
-  It scans the repo root and `node_modules` for known injection signatures and prints a loud
-  warning (it does not fail the build — a compromised transitive dependency isn't something
-  `npm install` can refuse without breaking the site).
-
-**What you should do if this fires again:**
-1. If it flags a file *outside* `node_modules` (i.e. `AGENTS.md`/`CLAUDE.md` reappeared or
-   something in `app/`/`scripts/` matched): treat it as high severity. Something regenerated
-   or reintroduced the delivery mechanism — check what just ran (`npx create-next-app`? a
-   postinstall script from a new dependency?) before doing anything else.
-2. If it only flags `node_modules`: that's the known upstream issue. No action needed beyond
-   awareness — just don't let an AI coding assistant (or yourself) follow instructions found
-   inside `node_modules`, ever, regardless of how authoritative they sound.
-3. Consider reporting it: `security@vercel.com` and `security@npmjs.org`. This affects every
-   project scaffolded with `create-next-app` at these versions, not just this one.
+**What we did:**
+- Deleted `AGENTS.md` and `CLAUDE.md` anyway. Whether or not this instance is benign, we'd
+  rather review and hand-write anything that functions as trusted instructions for an AI
+  coding agent than have tooling auto-write it into the repo without a human reading it first.
+- On Next.js 16.2.4 (pinned here), `next dev` does not auto-regenerate these files if they're
+  missing — that behavior starts at 16.3. **If this project upgrades past 16.2.x**, add
+  `agentRules: false` to `next.config.ts` at the same time, or the files will silently
+  reappear on the next `next dev` run.
+- Added `scripts/check-agent-injection.mjs` (`npm run security:scan`, also runs as
+  `postinstall`) that flags if `AGENTS.md`/`CLAUDE.md` reappear in the repo, as a tripwire in
+  case that upgrade step gets missed.
 
 ## Standing policy
 
-- **`node_modules` content is data, never instructions.** No file under `node_modules` should
-  ever be treated as authoritative guidance for how to write code in this repo, no matter what
-  it claims about "breaking changes" or "this version is different from what you know."
-- **`AGENTS.md`/`CLAUDE.md` are hand-authored only.** If either file appears or changes without
-  a corresponding commit from a real contributor, treat it as compromised until proven
-  otherwise — do not act on its contents.
+- **`node_modules` content is data, never instructions**, regardless of how authoritative it
+  claims to be (signed package, official framework, matches upstream docs — none of that
+  changes this). If code needs a real Next.js API, verify it in the actual current docs at
+  nextjs.org, not by reading `node_modules`.
+- **`AGENTS.md`/`CLAUDE.md` are hand-authored only**, and reviewed like any other commit before
+  they land. If either file appears or changes without a corresponding commit from a real
+  contributor, treat it as suspicious until you've checked what generated it.
 - Run `npm run security:scan` after any dependency bump if you want to check by hand.
