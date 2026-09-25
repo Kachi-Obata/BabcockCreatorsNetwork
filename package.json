@@ -6,7 +6,9 @@
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "preview": "next build && next start -H 0.0.0.0"
+    "preview": "next build && next start -H 0.0.0.0",
+    "postinstall": "node scripts/check-agent-injection.mjs",
+    "security:scan": "node scripts/check-agent-injection.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.0",
