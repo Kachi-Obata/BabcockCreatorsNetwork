@@ -96,7 +96,7 @@ On 5 July, that room was the 600-Seater Building at Babcock University Teaching 
 
 This is only the beginning. Tell a creator to tell a creator.
 
-Ready for what comes next? Register with the Babcock Creators Network and stay connected for upcoming trainings, masterclasses, creative opportunities and industry experiences — www.babcockcreators.org`,
+Apply now to be a BCN member. Get access to upcoming trainings, masterclasses, creative opportunities and industry experiences — www.babcockcreators.org`,
   },
   {
     slug: "bcn-pilot-session-recap",
