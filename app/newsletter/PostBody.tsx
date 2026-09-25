@@ -17,6 +17,42 @@ export function CategoryTag({ label }: { label: string }) {
   );
 }
 
+// Matches **bold** spans and bare mentions of the BCN domain (with or
+// without a scheme/www) so they render as real, clickable links wherever
+// they appear in post text — no special markdown syntax required.
+const INLINE_RE =
+  /(\*\*[^*]+\*\*|(?:https?:\/\/)?(?:www\.)?babcockcreators\.org(?:\/[^\s)]*)?)/gi;
+const URL_RE = /^(?:https?:\/\/)?(?:www\.)?babcockcreators\.org/i;
+
+function renderInline(text: string) {
+  const parts = text.split(INLINE_RE);
+  return parts.map((part, j) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={j} style={{ color: "#CCCCCC", fontWeight: 600 }}>
+          {part.replace(/\*\*/g, "")}
+        </strong>
+      );
+    }
+    if (URL_RE.test(part)) {
+      const href = part.startsWith("http") ? part : `https://${part}`;
+      return (
+        <a
+          key={j}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:opacity-80"
+          style={{ color: "#AE8C07" }}
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+
 export function PostBody({ body }: { body: string }) {
   const lines = body.split("\n\n").filter(Boolean);
   const imageRe = /^!\[([^\]]*)\]\(([^)]+)\)$/;
@@ -51,22 +87,13 @@ export function PostBody({ body }: { body: string }) {
             </h4>
           );
         }
-        const parts = block.split(/(\*\*[^*]+\*\*)/g);
         return (
           <p
             key={i}
             className="text-[15px] leading-[1.85]"
             style={{ color: "#888888", fontFamily: "var(--font-dm-sans)" }}
           >
-            {parts.map((part, j) =>
-              part.startsWith("**") && part.endsWith("**") ? (
-                <strong key={j} style={{ color: "#CCCCCC", fontWeight: 600 }}>
-                  {part.replace(/\*\*/g, "")}
-                </strong>
-              ) : (
-                part
-              )
-            )}
+            {renderInline(block)}
           </p>
         );
       })}
