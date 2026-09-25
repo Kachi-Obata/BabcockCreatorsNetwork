@@ -17,7 +17,13 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Babcock Creators Network — A System, Not Just a Community",
   description:
     "BCN is a structured talent development platform for student creatives at Babcock University. Build skills, gain exposure, monetize your creativity, and develop real career pathways.",

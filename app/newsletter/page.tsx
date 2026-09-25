@@ -3,85 +3,13 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { posts } from "../data/newsletter";
+import { CategoryTag } from "./PostBody";
 
 export const metadata: Metadata = {
   title: "Newsletter — Babcock Creators Network",
   description:
     "Creator spotlights, BCN updates, and stories from the Babcock creative community.",
 };
-
-function CategoryTag({ label }: { label: string }) {
-  return (
-    <span
-      className="inline-block px-3 py-1 text-[10px] font-bold tracking-[2px] uppercase rounded-full"
-      style={{
-        background: "rgba(174,140,7,0.12)",
-        color: "#AE8C07",
-        border: "1px solid rgba(174,140,7,0.25)",
-        fontFamily: "var(--font-dm-sans)",
-      }}
-    >
-      {label}
-    </span>
-  );
-}
-
-function PostBody({ body }: { body: string }) {
-  const lines = body.split("\n\n").filter(Boolean);
-  const imageRe = /^!\[([^\]]*)\]\(([^)]+)\)$/;
-
-  return (
-    <div className="mt-8 space-y-5">
-      {lines.map((block, i) => {
-        const imageMatch = block.match(imageRe);
-        if (imageMatch) {
-          const [, alt, src] = imageMatch;
-          return (
-            <figure key={i} className="!mt-8 !mb-8 -mx-6 md:mx-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={src}
-                alt={alt}
-                className="w-full md:rounded-lg object-cover"
-                loading="lazy"
-              />
-            </figure>
-          );
-        }
-
-        if (block.startsWith("**") && block.endsWith("**")) {
-          return (
-            <h4
-              key={i}
-              className="text-[15px] font-semibold !mt-10"
-              style={{ color: "#F5F0E8", fontFamily: "var(--font-dm-sans)" }}
-            >
-              {block.replace(/\*\*/g, "")}
-            </h4>
-          );
-        }
-        const parts = block.split(/(\*\*[^*]+\*\*)/g);
-        return (
-          <p
-            key={i}
-            className="text-[15px] leading-[1.85]"
-            style={{ color: "#888888", fontFamily: "var(--font-dm-sans)" }}
-          >
-            {parts.map((part, j) =>
-              part.startsWith("**") && part.endsWith("**") ? (
-                <strong key={j} style={{ color: "#CCCCCC", fontWeight: 600 }}>
-                  {part.replace(/\*\*/g, "")}
-                </strong>
-              ) : (
-                part
-              )
-            )}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
 
 export default function NewsletterPage() {
   const sorted = [...posts].sort((a, b) => b.dateISO.localeCompare(a.dateISO));
@@ -159,37 +87,48 @@ export default function NewsletterPage() {
                     )}
                   </div>
 
-                  {post.coverImage && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={post.coverImage}
-                      alt={post.title}
-                      className="w-full rounded-lg object-cover mb-8"
-                      loading="lazy"
-                    />
-                  )}
+                  <Link href={`/newsletter/${post.slug}`}>
+                    {post.coverImage && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full rounded-lg object-cover mb-8 transition-opacity duration-300 hover:opacity-90"
+                        loading="lazy"
+                      />
+                    )}
 
-                  <h2
-                    className="leading-tight tracking-tight mb-4"
-                    style={{
-                      fontFamily: "var(--font-playfair)",
-                      fontSize: "clamp(24px, 4vw, 36px)",
-                      fontWeight: 700,
-                      color: "#F5F0E8",
-                      letterSpacing: "-0.5px",
-                    }}
-                  >
-                    {post.title}
-                  </h2>
+                    <h2
+                      className="leading-tight tracking-tight mb-4 transition-colors duration-200 hover:text-[#AE8C07]"
+                      style={{
+                        fontFamily: "var(--font-playfair)",
+                        fontSize: "clamp(24px, 4vw, 36px)",
+                        fontWeight: 700,
+                        color: "#F5F0E8",
+                        letterSpacing: "-0.5px",
+                      }}
+                    >
+                      {post.title}
+                    </h2>
+                  </Link>
 
                   <p
-                    className="text-[15px] leading-relaxed mb-2"
+                    className="text-[15px] leading-relaxed mb-6"
                     style={{ color: "#666666", fontFamily: "var(--font-dm-sans)" }}
                   >
                     {post.excerpt}
                   </p>
 
-                  <PostBody body={post.body} />
+                  <Link
+                    href={`/newsletter/${post.slug}`}
+                    className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[1px] transition-all duration-200 hover:gap-3"
+                    style={{ color: "#AE8C07", fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    Read more
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </Link>
                 </article>
               ))}
             </div>
